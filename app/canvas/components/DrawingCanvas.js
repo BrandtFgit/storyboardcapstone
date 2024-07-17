@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from 'react';
 import './DrawingCanvas.css';
+import KeyboardShortcuts from '../../KeyboardShortcuts';
 
 const DrawingCanvas = () => {
     const canvasRef = useRef(null);
@@ -27,6 +28,15 @@ const DrawingCanvas = () => {
         context.strokeStyle = strokeColor; 
         context.lineWidth = strokeSize;
         contextRef.current = context;
+
+        // Keyboard Shortcuts
+        KeyboardShortcuts.addShortcut(['Ctrl', 'z'], undo);
+        KeyboardShortcuts.addShortcut(['Ctrl', 'y'], redo);
+
+        return () => {
+            KeyboardShortcuts.removeShortcut(['Ctrl', 'z'], undo);
+            KeyboardShortcuts.removeShortcut(['Ctrl', 'y'], redo);
+        };
     }, []);
     
     useEffect(() => {
@@ -35,27 +45,6 @@ const DrawingCanvas = () => {
             contextRef.current.strokeStyle = strokeColor;
         }
     }, [strokeSize, strokeColor]);
-
-    // UNDO REDO BINDS
-    useEffect(() => {
-        const handleKeyDown = (event) => {
-            if (event.ctrlKey) {
-                if (event.key === 'z' || event.key === 'Z') {
-                    event.preventDefault();
-                    undo();
-                } else if (event.key === 'y' || event.key === 'Y') {
-                    event.preventDefault();
-                    redo();
-                }
-            }
-        };
-
-        window.addEventListener('keydown', handleKeyDown);
-
-        return () => {
-            window.removeEventListener('keydown', handleKeyDown);
-        };
-    }, []);
 
     const saveState = () => {
         const canvas = canvasRef.current;
