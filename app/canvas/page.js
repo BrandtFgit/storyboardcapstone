@@ -1,7 +1,9 @@
+"use client";
+import React, { createElement, useLayoutEffect, useState } from "react";
+import DrawingCanvas from "../canvas/components/DrawingCanvas";
+
 export default function Canvas() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <p>Canvas</p>
-    </main>
+    <DrawingCanvas></DrawingCanvas>
   );
 }
