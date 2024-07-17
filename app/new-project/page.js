@@ -1,3 +1,6 @@
+"use client"
+import SceneContainer from './components/SceneContainer';
+
 export default function NewProject() {
   return (
     <main>
@@ -9,7 +12,7 @@ export default function NewProject() {
       </header>
       <div className="main-cont">
         <div className="sidebar"></div>
-        <p>Start a new project here.</p>
+        <SceneContainer />
       </div>
     </main>
   );

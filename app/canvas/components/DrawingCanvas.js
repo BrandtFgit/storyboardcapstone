@@ -33,6 +33,7 @@ const DrawingCanvas = () => {
         KeyboardShortcuts.addShortcut(['Ctrl', 'z'], undo);
         KeyboardShortcuts.addShortcut(['Ctrl', 'y'], redo);
 
+        // Cleanup Shortcuts
         return () => {
             KeyboardShortcuts.removeShortcut(['Ctrl', 'z'], undo);
             KeyboardShortcuts.removeShortcut(['Ctrl', 'y'], redo);

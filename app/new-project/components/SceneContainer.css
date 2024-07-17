@@ -1,0 +1,5 @@
+/* components/SceneContainer.css */
+.scene-container {
+    display: flex;
+    flex-direction: column;
+}
