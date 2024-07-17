@@ -31,3 +31,59 @@ body {
     text-wrap: balance;
   }
 }
+
+.main-cont {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 93vh;
+  background-color: rgb(73, 54, 77);
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 7vh;
+  padding: 0.5rem;
+  background-color: rgb(38, 24, 42);
+  border-bottom-width: 0.2rem;
+  border-bottom-color: rgb(89, 68, 93);
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 5%;
+  height: 93vh;
+  background-color: rgb(38, 24, 42);
+  border-right-width: 0.2rem;
+  border-right-color: rgb(89, 68, 93);
+}
+
+.home-sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 15%;
+  height: 93vh;
+  background-color: rgb(38, 24, 42);
+  border-right-width: 0.2rem;
+  border-right-color: rgb(89, 68, 93);
+}
+
+.button {
+  display: flex;
+  flex-direction: row;
+  width: 90%;
+  height: 5vh;
+  margin: 1rem;
+  padding: 0.5rem;
+  background-color: rgb(69, 45, 75);
+  border-radius: 0.5rem;
+  border-width: 0.2rem;
+  border-color: rgb(89, 68, 93);
+}
+
+.button:hover {
+  background-color: rgb(112, 86, 117);
+}
