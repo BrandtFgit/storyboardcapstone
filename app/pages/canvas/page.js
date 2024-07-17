@@ -1,9 +1,7 @@
 "use client";
 import React, { createElement, useLayoutEffect, useState } from "react";
-import DrawingCanvas from "../canvas/components/DrawingCanvas";
+import DrawingCanvas from "../../components/canvas/DrawingCanvas";
 
 export default function Canvas() {
-  return (
-    <DrawingCanvas></DrawingCanvas>
-  );
+  return <DrawingCanvas></DrawingCanvas>;
 }
