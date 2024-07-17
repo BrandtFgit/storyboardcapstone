@@ -12,7 +12,11 @@ export default function NewProject() {
       </header>
       <div className="main-cont">
         <div className="sidebar"></div>
-        <SceneContainer />
+
+          <div style={{ width: '100vw', height: '80vh' }}>
+            <SceneContainer />
+          </div>
+          
       </div>
     </main>
   );

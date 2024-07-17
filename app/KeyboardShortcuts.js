@@ -6,7 +6,9 @@ class KeyboardShortcuts {
 
         this.shortcuts = {};
         this.handleKeyDown = this.handleKeyDown.bind(this);
+        this.handleKeyUp = this.handleKeyUp.bind(this);
         window.addEventListener('keydown', this.handleKeyDown);
+        window.addEventListener('keyup', this.handleKeyUp);
 
         KeyboardShortcuts.instance = this;
     }
@@ -15,7 +17,15 @@ class KeyboardShortcuts {
         const keyCombination = this.getKeyCombination(event);
         if (this.shortcuts[keyCombination]) {
             event.preventDefault();
-            this.shortcuts[keyCombination].forEach(callback => callback());
+            this.shortcuts[keyCombination].forEach(callback => callback(true));
+        }
+    }
+
+    handleKeyUp(event) {
+        const keyCombination = this.getKeyCombination(event);
+        if (this.shortcuts[keyCombination]) {
+            event.preventDefault();
+            this.shortcuts[keyCombination].forEach(callback => callback(false));
         }
     }
 
@@ -45,13 +55,16 @@ class KeyboardShortcuts {
             }
         }
     }
-
+    
+    // remove listeners for keybinds
     destroy() {
         window.removeEventListener('keydown', this.handleKeyDown);
+        window.removeEventListener('keyup', this.handleKeyUp);
         this.shortcuts = {};
     }
 }
 
+// Create a singleton of this instance and return it.
 const instance = new KeyboardShortcuts();
 Object.freeze(instance);
 
