@@ -36,6 +36,27 @@ const DrawingCanvas = () => {
         }
     }, [strokeSize, strokeColor]);
 
+    // UNDO REDO BINDS
+    useEffect(() => {
+        const handleKeyDown = (event) => {
+            if (event.ctrlKey) {
+                if (event.key === 'z' || event.key === 'Z') {
+                    event.preventDefault();
+                    undo();
+                } else if (event.key === 'y' || event.key === 'Y') {
+                    event.preventDefault();
+                    redo();
+                }
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, []);
+
     const saveState = () => {
         const canvas = canvasRef.current;
         undoStack.current.push(canvas.toDataURL());
