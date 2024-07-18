@@ -3,7 +3,8 @@ import Link from "next/link";
 
 export default function Login() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main className="login-cont">
+      <Image src="/logov2.png" alt="logo" width={600} height={400} />
       <ul>
         <li>
           {" "}

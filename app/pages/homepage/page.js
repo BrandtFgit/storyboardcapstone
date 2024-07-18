@@ -7,8 +7,10 @@ export default function Homepage() {
       <div className="main-cont">
         <div className="home-sidebar">
           <ul>
-            <li className="button">
-              <a href="./new-project">New Project</a>
+            <li>
+              <a className="button" href="./new-project">
+                New Project
+              </a>
             </li>
           </ul>
         </div>

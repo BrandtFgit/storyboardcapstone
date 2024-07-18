@@ -1,226 +1,222 @@
 "use client";
-import React, { useEffect, useRef, useState } from 'react';
-import './DrawingCanvas.css';
-import KeyboardShortcuts from '../../KeyboardShortcuts';
+import React, { useEffect, useRef, useState } from "react";
+import "./DrawingCanvas.css";
+import KeyboardShortcuts from "../common/KeyboardShortcuts";
 
 const DrawingCanvas = () => {
-    const canvasRef = useRef(null);
-    const contextRef = useRef(null);
-    const undoStack = useRef([]);
-    const redoStack = useRef([]);
+  const canvasRef = useRef(null);
+  const contextRef = useRef(null);
+  const undoStack = useRef([]);
+  const redoStack = useRef([]);
 
-    const [isDrawing, setIsDrawing] = useState(false);
-    const [strokeSize, setStrokeSize] = useState(6);
-    const [strokeColor, setStrokeColor] = useState('#000000'); // Default color is black
-    const [interactionDescription, setInteractionDescription] = useState('');
+  const [isDrawing, setIsDrawing] = useState(false);
+  const [strokeSize, setStrokeSize] = useState(6);
+  const [strokeColor, setStrokeColor] = useState("#000000"); // Default color is black
+  const [interactionDescription, setInteractionDescription] = useState("");
 
-    useEffect(() => {
-        const canvas = canvasRef.current;
-        const context = canvas.getContext("2d");
-        canvas.width = 800;
-        canvas.height = 450;
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d");
+    canvas.width = 800;
+    canvas.height = 450;
 
-        // Set initial background color to white
-        context.fillStyle = "#FFFFFF"; // White color
-        context.fillRect(0, 0, canvas.width, canvas.height);
-        
-        context.lineCap = "round";
-        context.strokeStyle = strokeColor; 
-        context.lineWidth = strokeSize;
-        contextRef.current = context;
+    // Set initial background color to white
+    context.fillStyle = "#FFFFFF"; // White color
+    context.fillRect(0, 0, canvas.width, canvas.height);
 
-        // Keyboard Shortcuts
-        KeyboardShortcuts.addShortcut(['Ctrl', 'z'], undo);
-        KeyboardShortcuts.addShortcut(['Ctrl', 'y'], redo);
+    context.lineCap = "round";
+    context.strokeStyle = strokeColor;
+    context.lineWidth = strokeSize;
+    contextRef.current = context;
 
-        // Cleanup Shortcuts
-        return () => {
-            KeyboardShortcuts.removeShortcut(['Ctrl', 'z'], undo);
-            KeyboardShortcuts.removeShortcut(['Ctrl', 'y'], redo);
-        };
-    }, []);
-    
-    useEffect(() => {
-        if (contextRef.current) {
-            contextRef.current.lineWidth = strokeSize;
-            contextRef.current.strokeStyle = strokeColor;
-        }
-    }, [strokeSize, strokeColor]);
+    // Keyboard Shortcuts
+    KeyboardShortcuts.addShortcut(["Ctrl", "z"], undo);
+    KeyboardShortcuts.addShortcut(["Ctrl", "y"], redo);
 
-    const saveState = () => {
-        const canvas = canvasRef.current;
-        undoStack.current.push(canvas.toDataURL());
-        if (redoStack.current.length > 0) {
-            redoStack.current = [];
-        }
+    // Cleanup Shortcuts
+    return () => {
+      KeyboardShortcuts.removeShortcut(["Ctrl", "z"], undo);
+      KeyboardShortcuts.removeShortcut(["Ctrl", "y"], redo);
     };
+  }, []);
 
-    const restoreState = (stack, oppositeStack) => {
-        if (stack.length === 0) return;
+  useEffect(() => {
+    if (contextRef.current) {
+      contextRef.current.lineWidth = strokeSize;
+      contextRef.current.strokeStyle = strokeColor;
+    }
+  }, [strokeSize, strokeColor]);
 
-        const canvas = canvasRef.current;
-        const context = canvas.getContext('2d');
+  const saveState = () => {
+    const canvas = canvasRef.current;
+    undoStack.current.push(canvas.toDataURL());
+    if (redoStack.current.length > 0) {
+      redoStack.current = [];
+    }
+  };
 
-        oppositeStack.push(canvas.toDataURL());
-        const image = new Image();
-        image.src = stack.pop();
-        image.onload = () => {
-            context.clearRect(0, 0, canvas.width, canvas.height);
-            context.drawImage(image, 0, 0);
-        };
+  const restoreState = (stack, oppositeStack) => {
+    if (stack.length === 0) return;
+
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d");
+
+    oppositeStack.push(canvas.toDataURL());
+    const image = new Image();
+    image.src = stack.pop();
+    image.onload = () => {
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      context.drawImage(image, 0, 0);
     };
+  };
 
-    const startDraw = ({ nativeEvent }) => {
-        saveState();
-        const { offsetX, offsetY } = nativeEvent;
-        contextRef.current.beginPath();
-        contextRef.current.moveTo(offsetX, offsetY);
-        contextRef.current.lineTo(offsetX, offsetY);
-        contextRef.current.stroke();
-        setIsDrawing(true);
-        nativeEvent.preventDefault();
-    };
+  const startDraw = ({ nativeEvent }) => {
+    saveState();
+    const { offsetX, offsetY } = nativeEvent;
+    contextRef.current.beginPath();
+    contextRef.current.moveTo(offsetX, offsetY);
+    contextRef.current.lineTo(offsetX, offsetY);
+    contextRef.current.stroke();
+    setIsDrawing(true);
+    nativeEvent.preventDefault();
+  };
 
-    const draw = ({ nativeEvent }) => {
-        if (!isDrawing) {
-            return;
-        }
-        const { offsetX, offsetY } = nativeEvent;
-        contextRef.current.lineTo(offsetX, offsetY);
-        contextRef.current.stroke();
-        nativeEvent.preventDefault();
-    };
-
-    const stopDraw = () => {
-        contextRef.current.closePath();
-        setIsDrawing(false);
-    };
-
-    const setToDraw = () => {
-        contextRef.current.globalCompositeOperation = 'source-over';
+  const draw = ({ nativeEvent }) => {
+    if (!isDrawing) {
+      return;
     }
+    const { offsetX, offsetY } = nativeEvent;
+    contextRef.current.lineTo(offsetX, offsetY);
+    contextRef.current.stroke();
+    nativeEvent.preventDefault();
+  };
 
-    const setToErase = () => {
-        contextRef.current.globalCompositeOperation = 'destination-out';
-    }
+  const stopDraw = () => {
+    contextRef.current.closePath();
+    setIsDrawing(false);
+  };
 
-    const handleStrokeSizeChange = (event) => {
-        setStrokeSize(parseInt(event.target.value));
-    }
+  const setToDraw = () => {
+    contextRef.current.globalCompositeOperation = "source-over";
+  };
 
-    const handleColorChange = (event) => {
-        setStrokeColor(event.target.value);
-    }
+  const setToErase = () => {
+    contextRef.current.globalCompositeOperation = "destination-out";
+  };
 
-    const handleInteractionDescriptionChange = (event) => {
-        setInteractionDescription(event.target.value);
-    }
+  const handleStrokeSizeChange = (event) => {
+    setStrokeSize(parseInt(event.target.value));
+  };
 
-    const clearCanvas = () => {
-        saveState();
-        const canvas = canvasRef.current;
-        const context = canvas.getContext('2d');
-        context.clearRect(0, 0, canvas.width, canvas.height);
-        context.fillStyle = "#FFFFFF"; // White color
-        context.fillRect(0, 0, canvas.width, canvas.height);
-    }
+  const handleColorChange = (event) => {
+    setStrokeColor(event.target.value);
+  };
 
-    const saveImageToLocal = (event) => {
-        let link = event.currentTarget;
-        link.setAttribute('download', 'canvas.png');
-    
-        const canvas = canvasRef.current;
-    
-        // Create a new canvas to hold both the original content and the caption
-        const mergedCanvas = document.createElement('canvas');
-        const mergedContext = mergedCanvas.getContext('2d');
-        mergedCanvas.width = canvas.width;
-        mergedCanvas.height = canvas.height + 50; // Height for the caption bar
-    
-        // Draw the original canvas content to the merged canvas
-        mergedContext.drawImage(canvas, 0, 0);
-    
-        // Draw the caption bar
-        mergedContext.fillStyle = '#E6E9FF'; // White color for the caption bar
-        mergedContext.fillRect(0, canvas.height, canvas.width, 50);
-    
-        // Draw the interaction description text on the caption bar with a margin
-        mergedContext.fillStyle = '#000000'; // Black color for the text
-        mergedContext.font = '18px Arial'; // Set the font style
-        const margin = 5; // Margin around the text
-        const textX = margin; // X-coordinate for the text (start from the left margin)
-        const textY = canvas.height + 25; // Y-coordinate for the text (centered vertically)
-        mergedContext.fillText(interactionDescription, textX, textY); // Draw the text
-    
-        // Convert the merged canvas to a data URL and set it as the download link href
-        let image = mergedCanvas.toDataURL('image/png');
-        link.setAttribute('href', image);
-    }
+  const handleInteractionDescriptionChange = (event) => {
+    setInteractionDescription(event.target.value);
+  };
 
-    const undo = () => {
-        restoreState(undoStack.current, redoStack.current);
-    };
+  const clearCanvas = () => {
+    saveState();
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d");
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.fillStyle = "#FFFFFF"; // White color
+    context.fillRect(0, 0, canvas.width, canvas.height);
+  };
 
-    const redo = () => {
-        restoreState(redoStack.current, undoStack.current);
-    };
+  const saveImageToLocal = (event) => {
+    let link = event.currentTarget;
+    link.setAttribute("download", "canvas.png");
 
-    return (
+    const canvas = canvasRef.current;
+
+    // Create a new canvas to hold both the original content and the caption
+    const mergedCanvas = document.createElement("canvas");
+    const mergedContext = mergedCanvas.getContext("2d");
+    mergedCanvas.width = canvas.width;
+    mergedCanvas.height = canvas.height + 50; // Height for the caption bar
+
+    // Draw the original canvas content to the merged canvas
+    mergedContext.drawImage(canvas, 0, 0);
+
+    // Draw the caption bar
+    mergedContext.fillStyle = "#E6E9FF"; // White color for the caption bar
+    mergedContext.fillRect(0, canvas.height, canvas.width, 50);
+
+    // Draw the interaction description text on the caption bar with a margin
+    mergedContext.fillStyle = "#000000"; // Black color for the text
+    mergedContext.font = "18px Arial"; // Set the font style
+    const margin = 5; // Margin around the text
+    const textX = margin; // X-coordinate for the text (start from the left margin)
+    const textY = canvas.height + 25; // Y-coordinate for the text (centered vertically)
+    mergedContext.fillText(interactionDescription, textX, textY); // Draw the text
+
+    // Convert the merged canvas to a data URL and set it as the download link href
+    let image = mergedCanvas.toDataURL("image/png");
+    link.setAttribute("href", image);
+  };
+
+  const undo = () => {
+    restoreState(undoStack.current, redoStack.current);
+  };
+
+  const redo = () => {
+    restoreState(redoStack.current, undoStack.current);
+  };
+
+  return (
+    <div>
+      <canvas
+        className="canvas-container"
+        ref={canvasRef}
+        onMouseDown={startDraw}
+        onMouseMove={draw}
+        onMouseUp={stopDraw}
+        onMouseLeave={stopDraw}
+      ></canvas>
+      <textarea
+        className="interaction-textarea"
+        value={interactionDescription}
+        onChange={handleInteractionDescriptionChange}
+        placeholder="Write what's happening in your scene..."
+      />
+      <div className="controls">
         <div>
-            <canvas className="canvas-container"
-                ref={canvasRef}
-                onMouseDown={startDraw}
-                onMouseMove={draw}
-                onMouseUp={stopDraw}
-                onMouseLeave={stopDraw}
-            >
-            </canvas>
-            <textarea
-                className="interaction-textarea"
-                value={interactionDescription}
-                onChange={handleInteractionDescriptionChange}
-                placeholder="Write what's happening in your scene..."
-            />
-            <div className="controls">
-                <div>
-                    <input
-                        type="range"
-                        min="1"
-                        max="20"
-                        value={strokeSize}
-                        onChange={handleStrokeSizeChange}
-                    />
-                    <span>Stroke Size: {strokeSize}</span>
-                </div>
-                <div>
-                    <input
-                        type="color"
-                        value={strokeColor}
-                        onChange={handleColorChange}
-                    />
-                    <span>Selected Color: {strokeColor}</span>
-                </div>
-                <div>
-                    <button onClick={setToDraw}>
-                        Draw
-                    </button>
-                    <button onClick={setToErase}>
-                        Erase
-                    </button>
-                    <a id="download_image_link" href="download_link" onClick={saveImageToLocal}>Save Image</a>
-                    <button onClick={clearCanvas}>
-                        Clear Canvas
-                    </button>
-                    <button onClick={undo}>
-                        Undo
-                    </button>
-                    <button onClick={redo}>
-                        Redo
-                    </button>
-                </div>
-            </div>
+          <input
+            type="range"
+            min="1"
+            max="20"
+            value={strokeSize}
+            onChange={handleStrokeSizeChange}
+          />
+          <span>Stroke Size: {strokeSize}</span>
         </div>
-    );
-}
+        <div>
+          <input
+            type="color"
+            value={strokeColor}
+            onChange={handleColorChange}
+          />
+          <span>Selected Color: {strokeColor}</span>
+        </div>
+        <div>
+          <button onClick={setToDraw}>Draw</button>
+          <button onClick={setToErase}>Erase</button>
+          <a
+            id="download_image_link"
+            href="download_link"
+            onClick={saveImageToLocal}
+          >
+            Save Image
+          </a>
+          <button onClick={clearCanvas}>Clear Canvas</button>
+          <button onClick={undo}>Undo</button>
+          <button onClick={redo}>Redo</button>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default DrawingCanvas;

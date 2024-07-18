@@ -40,9 +40,20 @@ body {
   background-color: rgb(73, 54, 77);
 }
 
+.login-cont {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  background-color: rgb(73, 54, 77);
+}
+
 .header {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   width: 100%;
   height: 7vh;
   padding: 0.5rem;
@@ -74,6 +85,7 @@ body {
 .button {
   display: flex;
   flex-direction: row;
+  justify-content: center;
   width: 90%;
   height: 5vh;
   margin: 1rem;
@@ -86,4 +98,9 @@ body {
 
 .button:hover {
   background-color: rgb(112, 86, 117);
+}
+
+.nav-title {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
 }
