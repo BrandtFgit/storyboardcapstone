@@ -1,7 +1,7 @@
 // components/Scene.js
-import React from "react";
-import { Draggable, Droppable } from "react-beautiful-dnd";
-import Shot from "./Shot";
+import React from 'react';
+import { Draggable, Droppable } from 'react-beautiful-dnd';
+import Shot from './Shot';
 
 const Scene = ({ scene, index, setScenes }) => {
   return (

@@ -6,12 +6,12 @@ import SceneContainer from "@/app/components/new-project/SceneContainer";
 import DrawingCanvas from "@/app/components/canvas/DrawingCanvas";
 
 const initialScenes = [
-  { id: "scene-1", title: "Scene 1", shots: [] },
-  { id: "scene-2", title: "Scene 2", shots: [] },
+  { id: 'scene-1', title: 'Scene 1', shots: [] },
+  { id: 'scene-2', title: 'Scene 2', shots: [] },
 ];
 
 export default function NewProject() {
-  const [isDrawingMode, setIsDrawingMode] = useState(false);
+  const [isDrawingMode, setIsDrawingMode] = useState(true);
   const [scenes, setScenes] = useState(initialScenes);
   const [selectedSceneId, setSelectedSceneId] = useState(initialScenes[0].id);
 
@@ -98,6 +98,7 @@ export default function NewProject() {
     );
     setIsDrawingMode(false);
   };
+  
 
   return (
     <main>
