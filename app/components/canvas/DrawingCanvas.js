@@ -102,7 +102,8 @@ const DrawingCanvas = ({ onSaveDrawing }) => {
   };
 
   const setToErase = () => {
-    contextRef.current.globalCompositeOperation = "destination-out";
+    contextRef.current.globalCompositeOperation = "source-over";
+    setStrokeColor("#FFFFFF");
   };
 
   const handleStrokeSizeChange = (event) => {
