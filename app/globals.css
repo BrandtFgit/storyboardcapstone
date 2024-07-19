@@ -104,3 +104,51 @@ body {
   font-size: 2.25rem;
   line-height: 2.5rem;
 }
+
+
+/* styles.css */
+
+.scene-container {
+  display: flex;
+  overflow-x: auto;
+  padding: 16px;
+  background-color: #f0f0f0;
+}
+
+.scene {
+  flex: 0 0 300px; /* Fixed width for scenes */
+  margin: 0 16px;
+  padding: 16px;
+  background-color: #fff;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.scene h3 {
+  margin: 0 0 16px;
+  font-size: 18px;
+  text-align: center;
+}
+
+.shot {
+  margin-bottom: 16px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #fafafa;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.shot img {
+  max-width: 100%;
+  border-radius: 4px;
+}
+
+.shot p {
+  margin: 8px 0 0;
+  font-size: 14px;
+  text-align: center;
+}

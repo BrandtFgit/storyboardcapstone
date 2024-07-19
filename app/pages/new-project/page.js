@@ -1,4 +1,3 @@
-// pages/new-project/index.js
 "use client";
 import React, { useState } from "react";
 import Navbar from "@/app/components/common/navbar";
@@ -6,14 +5,15 @@ import Toolbar from "@/app/components/common/Toolbar";
 import SceneContainer from "@/app/components/new-project/SceneContainer";
 import DrawingCanvas from "@/app/components/canvas/DrawingCanvas";
 
+const initialScenes = [
+  { id: 'scene-1', title: 'Scene 1', shots: [] },
+  { id: 'scene-2', title: 'Scene 2', shots: [] },
+];
+
 export default function NewProject() {
   const [isDrawingMode, setIsDrawingMode] = useState(true);
-  const [scenes, setScenes] = useState([
-    { id: "1", title: "Scene 1", shots: [] },
-    { id: "2", title: "Scene 2", shots: [] },
-    { id: "3", title: "Scene 3", shots: [] },
-  ]);
-  const [selectedSceneId, setSelectedSceneId] = useState("1");
+  const [scenes, setScenes] = useState(initialScenes);
+  const [selectedSceneId, setSelectedSceneId] = useState(initialScenes[0].id);
 
   const tools_SceneContainer = [
     {
@@ -87,14 +87,18 @@ export default function NewProject() {
         if (scene.id === selectedSceneId) {
           return {
             ...scene,
-            shots: [...scene.shots, { imageDataUrl, description }],
+            shots: [
+              ...scene.shots,
+              { id: `shot-${new Date().getTime()}`, imageDataUrl, description },
+            ],
           };
         }
         return scene;
       })
     );
-    setIsDrawingMode(false); // Switch to Scene Mode after saving
+    setIsDrawingMode(false);
   };
+  
 
   return (
     <main>

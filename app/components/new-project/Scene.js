@@ -1,45 +1,32 @@
-import React from "react";
-import "./Scene.css";
-import Shot from "./Shot";
+// components/Scene.js
+import React from 'react';
+import { Draggable, Droppable } from 'react-beautiful-dnd';
+import Shot from './Shot';
 
-const Scene = ({
-  scene,
-  index,
-  onDragStartScene,
-  onDragOverScene,
-  onDropScene,
-  onDragStartShot,
-  onDragOverShot,
-  onDropShot,
-  onShotDropToDifferentScene,
-  isDraggingShot,
-}) => {
+const Scene = ({ scene, index, setScenes }) => {
   return (
-    <div
-      className="scene"
-      draggable={!isDraggingShot}
-      onDragStart={(e) => onDragStartScene(e, index)}
-      onDragOver={onDragOverScene}
-      onDrop={(e) => onDropScene(e, index)}
-    >
-      <h3>{scene.title}</h3>
-      <div
-        className="shots-container"
-        onDragOver={(e) => e.preventDefault()}
-        onDrop={(e) => onShotDropToDifferentScene(e, index)}
-      >
-        {scene.shots.map((shot, idx) => (
-          <Shot
-            key={idx}
-            shot={shot}
-            index={idx}
-            onDragStart={(e) => onDragStartShot(e, idx, index)}
-            onDragOver={(e) => e.preventDefault()}
-            onDrop={(e) => onDropShot(e, idx, index)}
-          />
-        ))}
-      </div>
-    </div>
+    <Draggable draggableId={scene.id} index={index}>
+      {(provided) => (
+        <div
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          className="scene"
+        >
+          <h3>{scene.title}</h3>
+          <Droppable droppableId={scene.id} type="shot">
+            {(provided) => (
+              <div ref={provided.innerRef} {...provided.droppableProps}>
+                {scene.shots.map((shot, index) => (
+                  <Shot key={shot.id} shot={shot} index={index} />
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </div>
+      )}
+    </Draggable>
   );
 };
 
