@@ -1,61 +1,93 @@
-// components/SceneContainer.js
-import React from 'react';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import Scene from './Scene';
+import React, { useState } from "react";
+import Scene from "./Scene";
+import "./SceneContainer.css";
 
 const SceneContainer = ({ scenes, setScenes }) => {
-  const onDragEnd = (result) => {
-    const { source, destination, type } = result;
-    if (!destination) return;
+  const [draggedSceneIndex, setDraggedSceneIndex] = useState(null);
+  const [draggedShot, setDraggedShot] = useState(null);
 
-    if (type === 'scene') {
-      // Reorder scenes
-      const reorderedScenes = Array.from(scenes);
-      const [movedScene] = reorderedScenes.splice(source.index, 1);
-      reorderedScenes.splice(destination.index, 0, movedScene);
-      setScenes(reorderedScenes);
-    } else if (type === 'shot') {
-      if (source.droppableId === destination.droppableId) {
-        // Reorder shots within the same scene
-        const sceneIndex = scenes.findIndex(scene => scene.id === source.droppableId);
-        const scene = scenes[sceneIndex];
-        const reorderedShots = Array.from(scene.shots);
-        const [movedShot] = reorderedShots.splice(source.index, 1);
-        reorderedShots.splice(destination.index, 0, movedShot);
-        const newScenes = [...scenes];
-        newScenes[sceneIndex] = { ...scene, shots: reorderedShots };
-        setScenes(newScenes);
-      } else {
-        // Move shots between scenes
-        const sourceSceneIndex = scenes.findIndex(scene => scene.id === source.droppableId);
-        const destinationSceneIndex = scenes.findIndex(scene => scene.id === destination.droppableId);
-        const sourceScene = scenes[sourceSceneIndex];
-        const destinationScene = scenes[destinationSceneIndex];
-        const sourceShots = Array.from(sourceScene.shots);
-        const destinationShots = Array.from(destinationScene.shots);
-        const [movedShot] = sourceShots.splice(source.index, 1);
-        destinationShots.splice(destination.index, 0, movedShot);
-        const newScenes = [...scenes];
-        newScenes[sourceSceneIndex] = { ...sourceScene, shots: sourceShots };
-        newScenes[destinationSceneIndex] = { ...destinationScene, shots: destinationShots };
-        setScenes(newScenes);
-      }
+  const onDragStartScene = (e, index) => {
+    if (!draggedShot) {
+      setDraggedSceneIndex(index);
+      console.log("Dragging scene:", index);
     }
   };
 
+  const onDropScene = (e, index) => {
+    if (draggedSceneIndex !== null && !draggedShot) {
+      const updatedScenes = [...scenes];
+      const [draggedScene] = updatedScenes.splice(draggedSceneIndex, 1);
+      updatedScenes.splice(index, 0, draggedScene);
+      setScenes(updatedScenes);
+      setDraggedSceneIndex(null);
+      console.log("Dropped scene:", index);
+    }
+  };
+
+  const onDragOverScene = (e) => {
+    e.preventDefault();
+  };
+
+  const onDragStartShot = (e, shotIndex, sceneIndex) => {
+    setDraggedShot({ shotIndex, sceneIndex });
+    console.log("Dragging shot:", shotIndex, "from scene:", sceneIndex);
+  };
+
+  const onDropShot = (e, shotIndex, sceneIndex) => {
+    if (!draggedShot) return;
+
+    const updatedScenes = [...scenes];
+    const { shotIndex: fromShotIndex, sceneIndex: fromSceneIndex } = draggedShot;
+
+    if (fromSceneIndex === sceneIndex) {
+      const shots = updatedScenes[sceneIndex].shots;
+      const [draggedShotItem] = shots.splice(fromShotIndex, 1);
+      shots.splice(shotIndex, 0, draggedShotItem);
+    } else {
+      const fromShots = updatedScenes[fromSceneIndex].shots;
+      const toShots = updatedScenes[sceneIndex].shots;
+      const [draggedShotItem] = fromShots.splice(fromShotIndex, 1);
+      toShots.splice(shotIndex, 0, draggedShotItem);
+    }
+
+    setScenes(updatedScenes);
+    setDraggedShot(null);
+    console.log("Dropped shot:", shotIndex, "to scene:", sceneIndex);
+  };
+
+  const onShotDropToDifferentScene = (e, toSceneIndex) => {
+    if (!draggedShot) return;
+
+    const updatedScenes = [...scenes];
+    const { shotIndex, sceneIndex: fromSceneIndex } = draggedShot;
+    const fromShots = updatedScenes[fromSceneIndex].shots;
+    const toShots = updatedScenes[toSceneIndex].shots;
+    const [draggedShotItem] = fromShots.splice(shotIndex, 1);
+    toShots.push(draggedShotItem);
+
+    setScenes(updatedScenes);
+    setDraggedShot(null);
+    console.log("Moved shot:", shotIndex, "to different scene:", toSceneIndex);
+  };
+
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId="sceneContainer" direction="horizontal" type="scene">
-        {(provided) => (
-          <div ref={provided.innerRef} {...provided.droppableProps} className="scene-container">
-            {scenes.map((scene, index) => (
-              <Scene key={scene.id} scene={scene} index={index} setScenes={setScenes} />
-            ))}
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
-    </DragDropContext>
+    <div className="scene-container">
+      {scenes.map((scene, index) => (
+        <Scene
+          key={scene.id}
+          scene={scene}
+          index={index}
+          onDragStartScene={onDragStartScene}
+          onDragOverScene={onDragOverScene}
+          onDropScene={onDropScene}
+          onDragStartShot={onDragStartShot}
+          onDragOverShot={(e) => e.preventDefault()}
+          onDropShot={onDropShot}
+          onShotDropToDifferentScene={onShotDropToDifferentScene}
+          isDraggingShot={!!draggedShot}
+        />
+      ))}
+    </div>
   );
 };
 

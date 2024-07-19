@@ -1,0 +1,23 @@
+/* components/new-project/Shot.css */
+
+.shot {
+    border: 1px solid #ccc;
+    margin: 5px;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .shot img {
+    max-width: 100px;
+    max-height: 100px;
+    object-fit: cover;
+  }
+  
+  .shot p {
+    margin: 5px 0 0;
+    text-align: center;
+  }
+  

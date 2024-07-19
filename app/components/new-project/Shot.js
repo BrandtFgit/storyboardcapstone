@@ -1,22 +1,18 @@
-// components/Shot.js
-import React from 'react';
-import { Draggable } from 'react-beautiful-dnd';
+import React from "react";
+import "./Shot.css";
 
-const Shot = ({ shot, index }) => {
+const Shot = ({ shot, index, onDragStart, onDragOver, onDrop }) => {
   return (
-    <Draggable draggableId={shot.id} index={index}>
-      {(provided) => (
-        <div
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-          className="shot"
-        >
-          <img src={shot.imageDataUrl} alt={shot.description} />
-          <p>{shot.description}</p>
-        </div>
-      )}
-    </Draggable>
+    <div
+      className="shot"
+      draggable
+      onDragStart={(e) => onDragStart(e, index)}
+      onDragOver={(e) => e.preventDefault()}
+      onDrop={(e) => onDrop(e, index)}
+    >
+      <img src={shot.imageDataUrl} alt={`Shot ${index + 1}`} />
+      <p>{shot.description}</p>
+    </div>
   );
 };
 
