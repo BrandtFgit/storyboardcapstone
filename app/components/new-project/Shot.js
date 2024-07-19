@@ -1,7 +1,5 @@
-// components/new-project/Shot.js
-
 import React from "react";
-import "./Shot.css"; // Add your styles here
+import "./Shot.css";
 
 const Shot = ({ shot, index, onDragStart, onDragOver, onDrop }) => {
   return (

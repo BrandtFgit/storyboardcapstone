@@ -82,35 +82,27 @@ export default function NewProject() {
   };
 
   const handleSaveDrawing = (imageDataUrl, description) => {
-    setScenes(scenes.map(scene => {
-      if (scene.id === selectedSceneId) {
-        return {
-          ...scene,
-          shots: [...scene.shots, { imageDataUrl, description }]
-        };
-      }
-      return scene;
-    }));
+    setScenes(
+      scenes.map((scene) => {
+        if (scene.id === selectedSceneId) {
+          return {
+            ...scene,
+            shots: [...scene.shots, { imageDataUrl, description }],
+          };
+        }
+        return scene;
+      })
+    );
     setIsDrawingMode(false); // Switch to Scene Mode after saving
-  };
-
-  const onDragStartScene = (e, index) => {
-    // Add your logic here if needed
-  };
-
-  const onDropScene = (e, index) => {
-    // Add your logic here if needed
-  };
-
-  const onDragOverScene = (e) => {
-    e.preventDefault();
   };
 
   return (
     <main>
       <Navbar title="New Project" />
       <div className="main-cont">
-        <Toolbar tools={isDrawingMode ? tools_DrawingCanvas : tools_SceneContainer} />
+        <Toolbar
+          tools={isDrawingMode ? tools_DrawingCanvas : tools_SceneContainer}
+        />
         <button onClick={toggleMode}>
           {isDrawingMode ? "Switch to Scene Mode" : "Switch to Drawing Mode"}
         </button>
@@ -118,12 +110,7 @@ export default function NewProject() {
           {isDrawingMode ? (
             <DrawingCanvas onSaveDrawing={handleSaveDrawing} />
           ) : (
-            <SceneContainer
-              scenes={scenes}
-              onDragStartScene={onDragStartScene}
-              onDragOverScene={onDragOverScene}
-              onDropScene={onDropScene}
-            />
+            <SceneContainer scenes={scenes} setScenes={setScenes} />
           )}
         </div>
       </div>

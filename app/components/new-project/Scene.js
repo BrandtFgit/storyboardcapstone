@@ -1,42 +1,41 @@
-// components/new-project/Scene.js
-
-import React, { useState } from "react";
+import React from "react";
 import "./Scene.css";
 import Shot from "./Shot";
 
-const Scene = ({ scene, index, onDragStartScene, onDragOverScene, onDropScene }) => {
-  const [draggedShotIndex, setDraggedShotIndex] = useState(null);
-
-  const onDragStartShot = (e, shotIndex) => {
-    setDraggedShotIndex(shotIndex);
-  };
-
-  const onDropShot = (e, shotIndex) => {
-    const updatedShots = [...scene.shots];
-    const [draggedShot] = updatedShots.splice(draggedShotIndex, 1);
-    updatedShots.splice(shotIndex, 0, draggedShot);
-    scene.shots = updatedShots; // Update the shots in the scene directly
-    setDraggedShotIndex(null);
-  };
-
+const Scene = ({
+  scene,
+  index,
+  onDragStartScene,
+  onDragOverScene,
+  onDropScene,
+  onDragStartShot,
+  onDragOverShot,
+  onDropShot,
+  onShotDropToDifferentScene,
+  isDraggingShot,
+}) => {
   return (
     <div
       className="scene"
-      draggable
+      draggable={!isDraggingShot}
       onDragStart={(e) => onDragStartScene(e, index)}
       onDragOver={onDragOverScene}
       onDrop={(e) => onDropScene(e, index)}
     >
       <h3>{scene.title}</h3>
-      <div className="shots-container">
+      <div
+        className="shots-container"
+        onDragOver={(e) => e.preventDefault()}
+        onDrop={(e) => onShotDropToDifferentScene(e, index)}
+      >
         {scene.shots.map((shot, idx) => (
           <Shot
             key={idx}
             shot={shot}
             index={idx}
-            onDragStart={onDragStartShot}
+            onDragStart={(e) => onDragStartShot(e, idx, index)}
             onDragOver={(e) => e.preventDefault()}
-            onDrop={onDropShot}
+            onDrop={(e) => onDropShot(e, idx, index)}
           />
         ))}
       </div>
