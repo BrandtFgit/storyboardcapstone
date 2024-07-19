@@ -1,3 +1,4 @@
+"use client";
 class KeyboardShortcuts {
     constructor() {
         if (KeyboardShortcuts.instance) {

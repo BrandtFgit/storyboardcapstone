@@ -1,9 +1,10 @@
+// components/canvas/DrawingCanvas.js
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import "./DrawingCanvas.css";
 import KeyboardShortcuts from "../common/KeyboardShortcuts";
 
-const DrawingCanvas = () => {
+const DrawingCanvas = ({ onSaveDrawing }) => {
   const canvasRef = useRef(null);
   const contextRef = useRef(null);
   const undoStack = useRef([]);
@@ -125,36 +126,10 @@ const DrawingCanvas = () => {
     context.fillRect(0, 0, canvas.width, canvas.height);
   };
 
-  const saveImageToLocal = (event) => {
-    let link = event.currentTarget;
-    link.setAttribute("download", "canvas.png");
-
+  const saveImageToLocal = () => {
     const canvas = canvasRef.current;
-
-    // Create a new canvas to hold both the original content and the caption
-    const mergedCanvas = document.createElement("canvas");
-    const mergedContext = mergedCanvas.getContext("2d");
-    mergedCanvas.width = canvas.width;
-    mergedCanvas.height = canvas.height + 50; // Height for the caption bar
-
-    // Draw the original canvas content to the merged canvas
-    mergedContext.drawImage(canvas, 0, 0);
-
-    // Draw the caption bar
-    mergedContext.fillStyle = "#E6E9FF"; // White color for the caption bar
-    mergedContext.fillRect(0, canvas.height, canvas.width, 50);
-
-    // Draw the interaction description text on the caption bar with a margin
-    mergedContext.fillStyle = "#000000"; // Black color for the text
-    mergedContext.font = "18px Arial"; // Set the font style
-    const margin = 5; // Margin around the text
-    const textX = margin; // X-coordinate for the text (start from the left margin)
-    const textY = canvas.height + 25; // Y-coordinate for the text (centered vertically)
-    mergedContext.fillText(interactionDescription, textX, textY); // Draw the text
-
-    // Convert the merged canvas to a data URL and set it as the download link href
-    let image = mergedCanvas.toDataURL("image/png");
-    link.setAttribute("href", image);
+    const image = canvas.toDataURL("image/png");
+    onSaveDrawing(image, interactionDescription);
   };
 
   const undo = () => {
@@ -204,8 +179,7 @@ const DrawingCanvas = () => {
           <button onClick={setToDraw}>Draw</button>
           <button onClick={setToErase}>Erase</button>
           <a
-            id="download_image_link"
-            href="download_link"
+
             onClick={saveImageToLocal}
           >
             Save Image
