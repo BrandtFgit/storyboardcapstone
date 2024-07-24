@@ -1,4 +1,3 @@
-// pages/new-project/index.js
 "use client";
 import React, { useState } from "react";
 import Navbar from "@/app/components/common/navbar";
@@ -8,12 +7,9 @@ import DrawingCanvas from "@/app/components/canvas/DrawingCanvas";
 
 export default function NewProject() {
   const [isDrawingMode, setIsDrawingMode] = useState(true);
-  const [scenes, setScenes] = useState([
-    { id: "1", title: "Scene 1", shots: [] },
-    { id: "2", title: "Scene 2", shots: [] },
-    { id: "3", title: "Scene 3", shots: [] },
-  ]);
-  const [selectedSceneId, setSelectedSceneId] = useState("1");
+  const [sceneCount, setSceneCount] = useState(2);
+  const [scenes, setScenes] = useState([{id: 1, title: 'Scene 1', shots: []}]);
+  const [selectedSceneId, setSelectedSceneId] = useState(1);
 
   const tools_SceneContainer = [
     {
@@ -26,7 +22,11 @@ export default function NewProject() {
     {
       src: "/tool_icons/new-scene.ico",
       alt: "new scene",
-      onClick: () => console.log("New Scene clicked"),
+      onClick: () => {
+        setSceneCount(sceneCount + 1); 
+        setSelectedSceneId(sceneCount);
+        setScenes([...scenes, { id: sceneCount, title: `Scene ${sceneCount}`, shots: [] }]);
+      },
       width: 50,
       height: 30,
     },
@@ -41,7 +41,7 @@ export default function NewProject() {
 
   const tools_DrawingCanvas = [
     {
-      src: "/tool_icons/pencil.png",
+      src: "/tool_icons/penciltool.png",
       alt: "brush",
       onClick: () => console.log("Brush clicked"),
       width: 50,
