@@ -1,9 +1,18 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
+import { useUserAuth } from "./_utils/auth-context";
 
+
+ 
 export default function Login() {
+  const { user, gitHubSignIn, firebaseSignOut } = useUserAuth();
+
   return (
     <main className="login-cont">
+      {/* Welcome, {user.displayName} ({user.email}) */}
+      <button onClick={gitHubSignIn}>Sign In With Github</button>
+      {user == null ? '' : <button onClick={firebaseSignOut}>Sign Out</button>}
       <Image src="/logov2.png" alt="logo" width={600} height={400} />
       <ul>
         <li>
