@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Scene.css";
 import Shot from "./Shot";
 
 const Scene = ({
   scene,
+  scenes,
+  setScenes,
   index,
   onDragStartScene,
   onDragOverScene,
@@ -14,6 +16,9 @@ const Scene = ({
   onShotDropToDifferentScene,
   isDraggingShot,
 }) => {
+  const [newSceneTitle, setNewSceneTitle] = useState(scene.title);
+  const show_save_button = (scenes, newSceneTitle) => newSceneTitle.length > 0 && newSceneTitle !== scenes[index].title
+
   return (
     <div
       className="scene"
@@ -22,7 +27,8 @@ const Scene = ({
       onDragOver={onDragOverScene}
       onDrop={(e) => onDropScene(e, index)}
     >
-      <h3>{scene.title}</h3>
+      <input value={newSceneTitle} onChange={(e) => {setNewSceneTitle(e.target.value);}}/>
+      {show_save_button(scenes, newSceneTitle) ? <button className="change-name" onClick={()=> {scenes[index].title = newSceneTitle; setScenes([...scenes]); console.log(newSceneTitle); console.log(scenes[index].title)} }>Save</button> : ''}
       <div
         className="shots-container"
         onDragOver={(e) => e.preventDefault()}

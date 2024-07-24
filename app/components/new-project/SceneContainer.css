@@ -5,7 +5,29 @@
   flex-direction: column;
   align-items: center;
 }
-
+.scene-container input
+{
+  background-color: rgb(89, 68, 93);
+  border: 1px white solid;
+  padding: 4px;
+  border-radius: 5px;
+  margin-left: 5px;
+  margin-top: 5px;
+}
+.scene-container .change-name
+{
+  padding: 4px;
+  color: white;
+  margin-left: 5px;
+  border: 1px white solid;
+  border-radius: 10px;
+  opacity: .8;
+  background: rgb(38, 24, 42);
+}
+.scene-container .change-name:hover
+{
+  opacity: 1;
+}
 .scene {
   border: 1px solid #ccc;
   padding: 10px;
@@ -20,6 +42,8 @@
   flex-wrap: wrap;
   gap: 10px;
   margin-top: 10px;
+  width: 100%;
+  min-height: 100px;
 }
 
 .shot {

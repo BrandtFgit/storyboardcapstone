@@ -76,6 +76,8 @@ const SceneContainer = ({ scenes, setScenes }) => {
         <Scene
           key={scene.id}
           scene={scene}
+          scenes={scenes}
+          setScenes={setScenes}
           index={index}
           onDragStartScene={onDragStartScene}
           onDragOverScene={onDragOverScene}
