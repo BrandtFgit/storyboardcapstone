@@ -8,7 +8,9 @@ import DrawingCanvas from "@/app/components/canvas/DrawingCanvas";
 export default function NewProject() {
   const [isDrawingMode, setIsDrawingMode] = useState(true);
   const [sceneCount, setSceneCount] = useState(2);
-  const [scenes, setScenes] = useState([{id: 1, title: 'Scene 1', shots: []}]);
+  const [scenes, setScenes] = useState([
+    { id: 1, title: "Scene 1", shots: [] },
+  ]);
   const [selectedSceneId, setSelectedSceneId] = useState(1);
 
   const tools_SceneContainer = [
@@ -23,9 +25,12 @@ export default function NewProject() {
       src: "/tool_icons/new-scene.ico",
       alt: "new scene",
       onClick: () => {
-        setSceneCount(sceneCount + 1); 
+        setSceneCount(sceneCount + 1);
         setSelectedSceneId(sceneCount);
-        setScenes([...scenes, { id: sceneCount, title: `Scene ${sceneCount}`, shots: [] }]);
+        setScenes([
+          ...scenes,
+          { id: sceneCount, title: `Scene ${sceneCount}`, shots: [] },
+        ]);
       },
       width: 50,
       height: 30,
@@ -34,6 +39,16 @@ export default function NewProject() {
       src: "/tool_icons/play.ico",
       alt: "play",
       onClick: () => console.log("Play clicked"),
+      width: 50,
+      height: 30,
+    },
+    {
+      src: "/tool_icons/draw.ico",
+      alt: "draw",
+      onClick: () => {
+        toggleMode();
+        console.log("Draw clicked");
+      },
       width: 50,
       height: 30,
     },
@@ -75,6 +90,16 @@ export default function NewProject() {
       width: 50,
       height: 30,
     },
+    {
+      src: "/tool_icons/check.ico",
+      alt: "check",
+      onClick: () => {
+        toggleMode();
+        console.log("Check clicked");
+      },
+      width: 50,
+      height: 30,
+    },
   ];
 
   const toggleMode = () => {
@@ -97,16 +122,13 @@ export default function NewProject() {
   };
 
   return (
-    <main>
+    <main className="main">
       <Navbar title="New Project" />
       <div className="main-cont">
         <Toolbar
           tools={isDrawingMode ? tools_DrawingCanvas : tools_SceneContainer}
         />
-        <button onClick={toggleMode}>
-          {isDrawingMode ? "Switch to Scene Mode" : "Switch to Drawing Mode"}
-        </button>
-        <div style={{ width: "100vw", height: "80vh" }}>
+        <div style={{ width: "100%", height: "80%" }}>
           {isDrawingMode ? (
             <DrawingCanvas onSaveDrawing={handleSaveDrawing} />
           ) : (

@@ -142,52 +142,51 @@ const DrawingCanvas = ({ onSaveDrawing }) => {
   };
 
   return (
-    <div>
-      <canvas
-        className="canvas-container"
-        ref={canvasRef}
-        onMouseDown={startDraw}
-        onMouseMove={draw}
-        onMouseUp={stopDraw}
-        onMouseLeave={stopDraw}
-      ></canvas>
-      <textarea
-        className="interaction-textarea"
-        value={interactionDescription}
-        onChange={handleInteractionDescriptionChange}
-        placeholder="Write what's happening in your scene..."
-      />
-      <div className="controls">
-        <div>
-          <input
-            type="range"
-            min="1"
-            max="20"
-            value={strokeSize}
-            onChange={handleStrokeSizeChange}
-          />
-          <span>Stroke Size: {strokeSize}</span>
-        </div>
-        <div>
-          <input
-            type="color"
-            value={strokeColor}
-            onChange={handleColorChange}
-          />
-          <span>Selected Color: {strokeColor}</span>
-        </div>
-        <div>
-          <button onClick={setToDraw}>Draw</button>
-          <button onClick={setToErase}>Erase</button>
-          <a
-
-            onClick={saveImageToLocal}
-          >
-            Save Image
-          </a>
-          <button onClick={clearCanvas}>Clear Canvas</button>
-          <button onClick={undo}>Undo</button>
-          <button onClick={redo}>Redo</button>
+    <div className="shot-container">
+      <div className="content-container">
+        <canvas
+          className="canvas-container"
+          ref={canvasRef}
+          onMouseDown={startDraw}
+          onMouseMove={draw}
+          onMouseUp={stopDraw}
+          onMouseLeave={stopDraw}
+        ></canvas>
+        <textarea
+          className="interaction-textarea"
+          value={interactionDescription}
+          onChange={handleInteractionDescriptionChange}
+          placeholder="Write what's happening in your scene..."
+        />
+      </div>
+      <div className="content-container">
+        <div className="controls">
+          <div>
+            <input
+              type="range"
+              min="1"
+              max="20"
+              value={strokeSize}
+              onChange={handleStrokeSizeChange}
+            />
+            <span>Stroke Size: {strokeSize}</span>
+          </div>
+          <div>
+            <input
+              type="color"
+              value={strokeColor}
+              onChange={handleColorChange}
+            />
+            <span>Selected Color: {strokeColor}</span>
+          </div>
+          <div>
+            <button onClick={setToDraw}>Draw</button>
+            <button onClick={setToErase}>Erase</button>
+            <a onClick={saveImageToLocal}>Save Image</a>
+            <button onClick={clearCanvas}>Clear Canvas</button>
+            <button onClick={undo}>Undo</button>
+            <button onClick={redo}>Redo</button>
+          </div>
         </div>
       </div>
     </div>

@@ -2,19 +2,14 @@ import Navbar from "@/app/components/common/navbar";
 
 export default function Homepage() {
   return (
-    <main>
+    <main className="main">
       <Navbar title="Homepage"></Navbar>
       <div className="main-cont">
         <div className="home-sidebar">
           <ul>
             <li>
-              <a className="button" href="./new-project">
-                New Project
-              </a>
-            </li>
-            <li>
-              <a className="button" href="./new-project">
-                Load Project
+              <a className="new-button" href="./new-project">
+                + New Project
               </a>
             </li>
             <li>
