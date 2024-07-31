@@ -1,8 +1,10 @@
 "use client";
 import React from "react";
 import ToolButton from "./ToolButton";
+import Tools from "../common/Tools";
 
-export default function Toolbar({ tools }) {
+export default function Toolbar() {
+  var tools = Tools.getTools();
   return (
     <div className="sidebar">
       {tools.map((tool, index) => (

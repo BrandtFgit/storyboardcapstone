@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./DrawingCanvas.css";
 import KeyboardShortcuts from "../common/KeyboardShortcuts";
+import Tools from "../common/Tools";
 
 const DrawingCanvas = ({ onSaveDrawing }) => {
   const canvasRef = useRef(null);
@@ -14,6 +15,64 @@ const DrawingCanvas = ({ onSaveDrawing }) => {
   const [strokeSize, setStrokeSize] = useState(6);
   const [strokeColor, setStrokeColor] = useState("#000000"); // Default color is black
   const [interactionDescription, setInteractionDescription] = useState("");
+
+
+  // SET TOOLS FOR DRAWING CANVAS.
+  Tools.setTools(
+    [
+      {
+        // BRUSH
+        src: "/tool_icons/penciltool.png",
+        alt: "brush",
+        onClick: () => {
+
+          console.log("Brush clicked")
+        
+        }
+      },
+      {
+        // ERASER
+        src: "/tool_icons/eraser.png",
+        alt: "eraser",
+        onClick: () =>{
+          console.log("Eraser clicked")
+        },
+      },
+      {
+        // UNDO
+        src: "/tool_icons/undo.png",
+        alt: "undo",
+        onClick: () =>{ 
+          undo();
+        },
+      },
+      {
+        // REDO
+        src: "/tool_icons/redo.png",
+        alt: "redo",
+        onClick: () => {
+          redo();
+        },
+      },
+      {
+        // SAVE
+        src: "/tool_icons/save.png",
+        alt: "save",
+        onClick: () => {
+          console.log("Save clicked")
+        },
+      },
+      {
+        // CONFIRM
+        src: "/tool_icons/check.ico",
+        alt: "check",
+        onClick: () => {
+          toggleMode();
+          console.log("Check clicked");
+        },
+      },
+    ]
+  );
 
   useEffect(() => {
     const canvas = canvasRef.current;
