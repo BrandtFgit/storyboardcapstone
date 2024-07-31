@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Scene from "./Scene";
 import "./SceneContainer.css";
 import Tools from "../common/Tools";
+
 const SceneContainer = ({ scenes, setScenes }) => {
   const [draggedSceneIndex, setDraggedSceneIndex] = useState(null);
   const [draggedShot, setDraggedShot] = useState(null);
@@ -53,6 +54,8 @@ const SceneContainer = ({ scenes, setScenes }) => {
       height: 30,
     },
   ]);
+
+  
 
   const onDragStartScene = (e, index) => {
     if (!draggedShot) {

@@ -7,8 +7,19 @@ export default function Toolbar() {
   const [tools, setTools] = useState([]);
 
   useEffect(() => {
-    const fetchedTools = Tools.getTools();
-    setTools(fetchedTools);
+    // Initial fetch of tools
+    setTools(Tools.getTools());
+
+    const handleUpdate = (updatedTools) => {
+      setTools(updatedTools);
+    };
+     // Subscribe to the Tools instance updates
+     Tools.on('update', handleUpdate);
+
+     // Cleanup function to unsubscribe from the Tools instance updates
+     return () => {
+       Tools.off('update', handleUpdate);
+     };
   }, []);
   
   return (
