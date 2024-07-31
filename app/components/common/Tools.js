@@ -13,8 +13,16 @@ class Tools {
         this.tools = newTools
     }
 
+    clearTools(){
+        this.tools = [];
+    }
+
     getTools(){
         return this.tools;
+    }
+
+    addTool(newTool){
+        this.tools.push(newTool)
     }
 }
 

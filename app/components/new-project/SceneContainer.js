@@ -1,10 +1,58 @@
 import React, { useState } from "react";
 import Scene from "./Scene";
 import "./SceneContainer.css";
-
+import Tools from "../common/Tools";
 const SceneContainer = ({ scenes, setScenes }) => {
   const [draggedSceneIndex, setDraggedSceneIndex] = useState(null);
   const [draggedShot, setDraggedShot] = useState(null);
+
+  Tools.setTools([
+    // NEW SHOT TOOL
+    {
+      src: "/tool_icons/new-shot.ico",
+      alt: "new shot",
+      onClick: () => console.log("New Shot clicked"),
+      width: 50,
+      height: 30,
+    },
+
+    // NEW SCENE TOOL
+    {
+      src: "/tool_icons/new-scene.ico",
+      alt: "new scene",
+      onClick: () => {
+        setSceneCount(sceneCount + 1);
+        setSelectedSceneId(sceneCount);
+        setScenes([
+          ...scenes,
+          { id: sceneCount, title: `Scene ${sceneCount}`, shots: [] },
+        ]);
+      },
+      width: 50,
+      height: 30,
+    },
+
+    // PLAY PRESENTATION
+    {
+      src: "/tool_icons/play.ico",
+      alt: "play",
+      onClick: () => console.log("Play clicked"),
+      width: 50,
+      height: 30,
+    },
+
+    // DRAW????
+    {
+      src: "/tool_icons/draw.ico",
+      alt: "draw",
+      onClick: () => {
+        toggleMode();
+        console.log("Draw clicked");
+      },
+      width: 50,
+      height: 30,
+    },
+  ]);
 
   const onDragStartScene = (e, index) => {
     if (!draggedShot) {

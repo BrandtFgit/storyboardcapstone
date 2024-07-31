@@ -25,7 +25,7 @@ const DrawingCanvas = ({ onSaveDrawing }) => {
         src: "/tool_icons/penciltool.png",
         alt: "brush",
         onClick: () => {
-
+          setToDraw();
           console.log("Brush clicked")
         
         }
@@ -35,6 +35,7 @@ const DrawingCanvas = ({ onSaveDrawing }) => {
         src: "/tool_icons/eraser.png",
         alt: "eraser",
         onClick: () =>{
+          setToErase();
           console.log("Eraser clicked")
         },
       },
@@ -61,16 +62,7 @@ const DrawingCanvas = ({ onSaveDrawing }) => {
         onClick: () => {
           console.log("Save clicked")
         },
-      },
-      {
-        // CONFIRM
-        src: "/tool_icons/check.ico",
-        alt: "check",
-        onClick: () => {
-          toggleMode();
-          console.log("Check clicked");
-        },
-      },
+      }
     ]
   );
 

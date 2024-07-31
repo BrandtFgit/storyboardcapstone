@@ -1,10 +1,16 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect} from "react";
 import ToolButton from "./ToolButton";
 import Tools from "../common/Tools";
 
 export default function Toolbar() {
-  var tools = Tools.getTools();
+  const [tools, setTools] = useState([]);
+
+  useEffect(() => {
+    const fetchedTools = Tools.getTools();
+    setTools(fetchedTools);
+  }, []);
+  
   return (
     <div className="sidebar">
       {tools.map((tool, index) => (
