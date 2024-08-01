@@ -60,6 +60,7 @@ const DrawingCanvas = ({ onSaveDrawing }) => {
         src: "/tool_icons/save.png",
         alt: "save",
         onClick: () => {
+          saveImageToLocal();
           console.log("Save clicked")
         },
       }
