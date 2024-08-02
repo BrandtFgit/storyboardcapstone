@@ -151,24 +151,25 @@ const SceneContainer = ({ scenes, setScenes }) => {
       ref={containerRef}
       style={{
         width: '100%',
-        height: '100vh',
+        height: '90vh',
         overflow: 'hidden',
         cursor: isDragging.current ? 'grabbing' : 'default',
-        paddingTop: '50px', // Adjust this value based on your toolbar height
+        top: '7%', // Adjust this value based on your toolbar height
+        left: '4%',
         position: 'relative',
       }}
       onContextMenu={(e) => e.preventDefault()} // Prevent default context menu
     >
       <div
-        ref={contentRef}
-        className="grid-background" // Apply the grid background
-        style={{
-          transform: `translate(${translate.x}px, ${translate.y}px) scale(${scale})`,
-          transformOrigin: '0 0',
-          width: '1000px', // Initial large width
-          height: '1000px', // Initial large height
-          position: 'relative',
-        }}
+       ref={contentRef}
+       className="grid-background" // Apply the grid background
+       style={{
+         transform: `translate(${translate.x}px, ${translate.y}px) scale(${scale})`,
+         transformOrigin: '0 0',
+         width: '1000px', // Initial large width
+         height: '1000px', // Initial large height
+         position: 'relative',
+       }}
       >
         <div className="scene-container">
           {scenes.map((scene, index) => (

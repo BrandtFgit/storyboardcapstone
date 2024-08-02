@@ -4,7 +4,6 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  height: 93%;
 }
 .scene-container input
 {
@@ -34,7 +33,7 @@
   padding: 10px;
   margin: 10px 0;
   background: #552c68;
-  width: 5000px;
+  width: 700px;
   cursor: move;
 }
 
