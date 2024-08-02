@@ -2,7 +2,7 @@
 
 .scene-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   height: 93%;
 }
@@ -34,7 +34,7 @@
   padding: 10px;
   margin: 10px 0;
   background: #552c68;
-  width: 80%;
+  width: 5000px;
   cursor: move;
 }
 
@@ -55,8 +55,8 @@
 }
 
 .shot img {
-  max-width: 100px;
-  max-height: 100px;
+  max-width: 160px;
+  max-height: 90px;
   display: block;
   margin: 0 auto;
 }
