@@ -39,8 +39,8 @@ body {
 .main {
   width: 100%;
   height: 100vh;
-  /* background-color: rgb(65, 58, 67); */
-  background-color: rgb(248, 228, 253); 
+ /* background-color: rgb(65, 58, 67); */
+ background-color: rgb(248, 228, 253); 
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -52,8 +52,8 @@ body {
   flex-direction: row;
   width: 100%;
   height: 93%;
-  /* background-color: rgb(65, 58, 67); Dark Mode */
-  background-color: rgb(248, 228, 253); /*Light Mode*/
+ /* background-color: rgb(65, 58, 67); Dark Mode */
+ background-color: rgb(248, 228, 253); /*Light Mode*/
 }
 .name-input-container
 {
@@ -195,4 +195,22 @@ body {
 .logout:hover {
   background-color: rgb(69, 45, 75);
   border-radius: 0.5rem;
+}
+
+.navbar-buttons
+{
+  display: flex;
+}
+
+.navbar-buttons .button
+{
+  margin: 0 12px;
+  background: rgb(92, 9, 9);
+
+}
+.navbar-buttons .button:hover
+{
+  background: red;
+  cursor: pointer;
+
 }

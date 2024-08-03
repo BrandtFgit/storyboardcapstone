@@ -1,15 +1,17 @@
 "use client";
 import Navbar from "@/app/components/common/navbar";
-import {collection, getDocs } from "firebase/firestore";
+import {collection, getDocs, query, where } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import {db} from '@/app/_utils/firebase';
-
-
+import { useUserAuth } from "@/app/_utils/auth-context"; 
 
 export default function Homepage() {
+  const { user } = useUserAuth();
   const [savedProjects, setSavedProjects] = useState([]);
   const fetchProjects = async () => {
-    await getDocs(collection(db, "projects"))
+    const projectQuery = query(collection(db, "projects"), where("id_user", "==", user.uid));
+
+    await getDocs(projectQuery)
         .then((querySnapshot)=>{
             const newData = querySnapshot.docs.map((doc) => ({...doc.data(), id:doc.id }));
             setSavedProjects(newData);
@@ -17,9 +19,10 @@ export default function Homepage() {
         })
     }
   useEffect(() => {
-    if(!savedProjects.length) 
+    if(!savedProjects.length && user) 
       fetchProjects()
-  });
+  }, user);
+
 
   return (
     <main className="main">
