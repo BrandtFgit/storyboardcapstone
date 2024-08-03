@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useUserAuth } from "./_utils/auth-context";
 import { collection, getDocs, addDoc } from "firebase/firestore";
 import {db} from './_utils/firebase';
+import "./globals.css";
 
  
 export default function Login() {
@@ -36,7 +37,7 @@ export default function Login() {
       <button onClick={fetchProjects}>Fetch</button>
       <button onClick={addProject}>Add</button>
 
-      <Image src="/logov2.png" alt="logo" width={600} height={400} />
+      <img src="/logov2.png" alt="logo" width={600} height={400}/>
       {user ? 
         <div>
         <button type="submit" onClick={firebaseSignOut} className="hover:underline">Sign out</button>
