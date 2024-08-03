@@ -9,7 +9,6 @@ export default function Toolbar() {
   useEffect(() => {
     // Initial fetch of tools
     setTools(Tools.getTools());
-
     const handleUpdate = (updatedTools) => {
       setTools(updatedTools);
     };

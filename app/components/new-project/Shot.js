@@ -1,7 +1,14 @@
 import React from "react";
 import "./Shot.css";
 
-const Shot = ({ shot, index, onDragStart, onDragOver, onDrop }) => {
+const Shot = ({ shot, index, onDragStart, onDragOver, onDrop, sceneIndex, scenes, setScenes }) => {
+  
+  const deleteShot = (index, sceneIndex, scenes, setScenes) => { 
+    const newScenes = [...scenes];
+    newScenes[sceneIndex].shots.splice(index, 1);
+    console.log(scenes);
+    setScenes(newScenes);
+  }
   return (
     <div
       className="shot"
@@ -12,6 +19,7 @@ const Shot = ({ shot, index, onDragStart, onDragOver, onDrop }) => {
     >
       <img src={shot.imageDataUrl} alt={`Shot ${index + 1}`} />
       <p>{shot.description}</p>
+      <div className="button" onClick={() => deleteShot(index, sceneIndex, scenes, setScenes)}>Delete Shot</div>
     </div>
   );
 };

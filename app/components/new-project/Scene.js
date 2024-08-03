@@ -14,10 +14,11 @@ const Scene = ({
   onDragOverShot,
   onDropShot,
   onShotDropToDifferentScene,
-  isDraggingShot,
+  isDraggingShot
+  
 }) => {
   const [newSceneTitle, setNewSceneTitle] = useState(scene.title);
-  const show_save_button = (scenes, newSceneTitle) => newSceneTitle.length > 0 && newSceneTitle !== scenes[index].title
+  const show_save_button = (scenes, newSceneTitle) => newSceneTitle?.length > 0 && newSceneTitle !== scenes[index].title
 
   return (
     <div
@@ -26,7 +27,7 @@ const Scene = ({
       onDragStart={(e) => onDragStartScene(e, index)}
       onDragOver={onDragOverScene}
       onDrop={(e) => onDropScene(e, index)}
-    >
+      >
       <input value={newSceneTitle} onChange={(e) => {setNewSceneTitle(e.target.value);}}/>
       {show_save_button(scenes, newSceneTitle) ? <button className="change-name" onClick={()=> {scenes[index].title = newSceneTitle; setScenes([...scenes]); console.log(newSceneTitle); console.log(scenes[index].title)} }>Save</button> : ''}
       <div
@@ -34,7 +35,7 @@ const Scene = ({
         onDragOver={(e) => e.preventDefault()}
         onDrop={(e) => onShotDropToDifferentScene(e, index)}
       >
-        {scene.shots.map((shot, idx) => (
+        {scene.shots?.map((shot, idx) => (
           <Shot
             key={idx}
             shot={shot}
@@ -42,9 +43,13 @@ const Scene = ({
             onDragStart={(e) => onDragStartShot(e, idx, index)}
             onDragOver={(e) => e.preventDefault()}
             onDrop={(e) => onDropShot(e, idx, index)}
+            scenes={scenes}
+            setScenes={setScenes}
+            sceneIndex={index}
           />
         ))}
       </div>
+      <div className="button" onClick={() => setScenes(scenes.filter(scene => scene.id !== scenes[index].id))}>Delete Scene</div>
     </div>
   );
 };

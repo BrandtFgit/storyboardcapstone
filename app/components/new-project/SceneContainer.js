@@ -4,7 +4,7 @@ import "./SceneContainer.css";
 import '../../globals.css';
 import Tools from "../common/Tools";
 
-const SceneContainer = ({ scenes, setScenes }) => {
+const SceneContainer = ({ scenes, setScenes, setIsDrawingMode }) => {
   
   // FREE SCROLL CANVAS
   const containerRef = useRef(null);
@@ -166,7 +166,8 @@ const SceneContainer = ({ scenes, setScenes }) => {
        style={{
          transform: `translate(${translate.x}px, ${translate.y}px) scale(${scale})`,
          transformOrigin: '0 0',
-
+         width: '1000px', // Initial large width
+         height: '1000px', // Initial large height
          position: 'relative',
        }}
       >
