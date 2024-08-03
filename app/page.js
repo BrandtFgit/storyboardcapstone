@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useUserAuth } from "./_utils/auth-context";
 import { collection, addDoc } from "firebase/firestore";
 import {db} from './_utils/firebase';
+import "./globals.css";
 
 
  
@@ -31,7 +32,7 @@ export default function Login() {
     <main className="main">
        <button onClick={addProject}>Add</button>
 
-      <Image src="/logov2.png" alt="logo" width={600} height={400} />
+      <img src="/logov2.png" alt="logo" width={600} height={400}/>
       {user ? 
         redirectUserToHomepage() :
         <div>
