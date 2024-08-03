@@ -5,9 +5,10 @@ import Toolbar from "@/app/components/common/Toolbar";
 import SceneContainer from "@/app/components/new-project/SceneContainer";
 import DrawingCanvas from "@/app/components/canvas/DrawingCanvas";
 import Tools from "@/app/components/common/Tools"
+import PresentationMode from "@/app/components/presentation-mode/PresentationMode";
 
 export default function NewProject() {
-  const [isDrawingMode, setIsDrawingMode] = useState(true);
+  const [mode, setMode] = useState("DRAWING"); // DRAWING, SCENES, PRESENTATION
 
   const [scenes, setScenes] = useState([
     { id: 1, title: "Scene 1", shots: [] },
@@ -19,13 +20,16 @@ export default function NewProject() {
 
 
   const toggleMode = () => {
-    setIsDrawingMode(!isDrawingMode);
-    console.log("HELLO!");
+    if (mode === "DRAWING") {
+      setMode("SCENES");
+    } else if (mode === "SCENES") {
+      setMode("DRAWING");
+    }
     // Clear toolbar.
     Tools.clearTools();
   };
 
-  if(isDrawingMode == false){
+  if(mode == "SCENES"){
       Tools.setTools([
         // NEW SHOT TOOL
         {
@@ -55,9 +59,22 @@ export default function NewProject() {
         {
           src: "/tool_icons/play.ico",
           alt: "play",
-          onClick: () => console.log("Play clicked"),
+          onClick: () => setMode("PRESENTATION"),
         },
       ]);
+
+    }else if (mode === "PRESENTATION"){
+      // Set tool to escape presentation.
+
+      Tools.setTools([
+        {
+          src: "/tool_icons/exit.ico",
+          alt: "exit presentation",
+          onClick: () => setMode("SCENES"),
+        },
+      ]);
+    }else{
+      Tools.clearTools();
     }
 
 
@@ -73,7 +90,7 @@ export default function NewProject() {
         return scene;
       })
     );
-    setIsDrawingMode(false); // Switch to Scene Mode after saving
+    setMode("SCENES");
   };
 
   return (
@@ -82,11 +99,9 @@ export default function NewProject() {
       <div className="main-cont">
         <Toolbar/>
         <div style={{ width: "100%", height: "80%" }}>
-          {isDrawingMode ? (
-            <DrawingCanvas onSaveDrawing={handleSaveDrawing} />
-          ) : (
-            <SceneContainer scenes={scenes} setScenes={setScenes} />
-          )}
+          {mode === "DRAWING" && <DrawingCanvas onSaveDrawing={handleSaveDrawing} />}
+          {mode === "SCENES" && <SceneContainer scenes={scenes} setScenes={setScenes} />}
+          {mode === "PRESENTATION" && <PresentationMode scenes={scenes} />}
         </div>
       </div>
     </main>
