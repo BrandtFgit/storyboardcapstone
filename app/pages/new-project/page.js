@@ -28,7 +28,7 @@ export default function NewProject() {
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         setScenes(docSnap.data().scenes);
-        setIsDrawingMode(false); // Switch to Scene Mode after loading
+        setMode("SCENES")
         setProjectName(docSnap.data().projectName);
         console.log("Scenes successfully loaded!");
       } else {

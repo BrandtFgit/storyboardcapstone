@@ -1,4 +1,3 @@
-// components/canvas/DrawingCanvas.js
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import "./DrawingCanvas.css";
@@ -73,6 +72,7 @@ const DrawingCanvas = ({ onSaveDrawing }) => {
   };
 
   const sprayPaint = (x, y) => {
+    if (!isSprayMode) return;
     const canvas = canvasRef.current;
     const context = contextRef.current;
     const width = canvas.width;
@@ -267,10 +267,15 @@ const stopDraw = (event) => {
   setIsDrawing(false);
 };
 
+const stopSpray = (event) => {
+  setIsSprayMode(false);
+    canvasRef.current.removeEventListener("mousedown", startSpray);
+};
+
 const setToDraw = () => {
   contextRef.current.globalCompositeOperation = "source-over";
   setStrokeColor("#000000");
-  setIsSprayMode(false);
+  stopSpray();
 };
 
 const setToErase = () => {
