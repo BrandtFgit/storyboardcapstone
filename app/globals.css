@@ -219,22 +219,43 @@ body {
 .saved-project
 {
   display: flex;
-  align-items: center;
 }
 
 .saved-project .button:not(.delete)
 {
   min-width: 100px;
 }
-.saved-project .button.delete
+
+.saved-project .delete
 {
-  background-color: maroon;
+  color: maroon;
   cursor: pointer;
-  padding-top:4px;
-  padding-bottom:4px;
-  height: 30px;  
+  margin-right: 5px;
+  font-weight: 500;
 }
-.saved-project .button.delete:hover
+
+.saved-project .delete:hover
 {
-  background-color: red;
+  color: red;
+}
+
+.card
+{
+  background-color: white;
+  margin: 10px;
+  border-radius: 10px;
+  flex-direction: column;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+.card-header
+{
+  display: flex;
+}
+.card h3
+{
+  width: 100%;
+}
+.card-content
+{
+  display: flex;
 }

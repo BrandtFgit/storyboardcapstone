@@ -39,7 +39,16 @@ export default function Homepage() {
           <ul>
             <li><a className="new-button" href="./new-project">+ New Project</a></li>
             <h3>Saved Projects</h3>
-            {savedProjects.map(project => <div className="saved-project"><a className="button" href={`./new-project?id=${project.id}`}>{project.projectName}</a><span className="button delete" data-key={project.id} onClick={deleteDocument}>Delete</span></div>)}
+            {savedProjects.map(project => 
+            <div className="saved-project card">
+              <div className="card-header">
+                <h3>{project.projectName}</h3>
+                <span className="delete" data-key={project.id} onClick={deleteDocument}>X</span>
+              </div>
+              <div className="card-content">
+                <a className="button" href={`./new-project?id=${project.id}`}>Open</a>
+              </div>
+            </div>)}
             {/* <li><a className="button" href="./new-project">Load Project</a></li>
             <li><a className="button" href="./new-project">Recent Projects</a></li>
             <li><a className="button" href="./new-project">Collaborate</a></li>
