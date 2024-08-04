@@ -11,17 +11,7 @@ import "./globals.css";
  
 export default function Login() {
   const { user, gitHubSignIn } = useUserAuth();
-    const addProject = async (e) => {
-      e.preventDefault();
-      try {
-          const docRef = await addDoc(collection(db, "projects"), {
-            project: "TEST",
-          });
-          console.log("Document written with ID: ", docRef.id);
-        } catch (e) {
-          console.error("Error adding document: ", e);
-        }        
-  }
+   
     const redirectUserToHomepage = () =>
     {
       window.location.href = '/pages/homepage'
@@ -30,17 +20,14 @@ export default function Login() {
 
   return (
     <main className="main">
-       <button onClick={addProject}>Add</button>
-
       <img src="/logov2.png" alt="logo" width={600} height={400}/>
       {user ? 
         redirectUserToHomepage() :
         <div>
-        <button type="submit" onClick={gitHubSignIn}   className="hover:underline">Sign in with Github to continue</button>
+        <div onClick={gitHubSignIn}   className="button">Sign in with Github</div>
         <ul>
         <li>
-          {" "}
-          <Link href="pages/canvas">Canvas</Link>{" "}
+          {/* <Link href="pages/canvas">Canvas</Link> */}
         </li>
       </ul>
         </div>}
