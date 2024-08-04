@@ -125,7 +125,7 @@ const DrawingCanvas = ({ onSaveDrawing }) => {
       },
     },
     {
-      src: "/tool_icons/paintbucket.png", // Add icon for the paint bucket
+      src: "/tool_icons/fillbucket.png", // Add icon for the paint bucket
       alt: "paintbucket",
       onClick: () => {
         setToFill();
