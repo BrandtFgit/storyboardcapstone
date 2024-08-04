@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import ToolButton from "./ToolButton";
 import Tools from "../common/Tools";
 
@@ -12,15 +12,15 @@ export default function Toolbar() {
     const handleUpdate = (updatedTools) => {
       setTools(updatedTools);
     };
-     // Subscribe to the Tools instance updates
-     Tools.on('update', handleUpdate);
+    // Subscribe to the Tools instance updates
+    Tools.on("update", handleUpdate);
 
-     // Cleanup function to unsubscribe from the Tools instance updates
-     return () => {
-       Tools.off('update', handleUpdate);
-     };
+    // Cleanup function to unsubscribe from the Tools instance updates
+    return () => {
+      Tools.off("update", handleUpdate);
+    };
   }, []);
-  
+
   return (
     <div className="sidebar">
       {tools.map((tool, index) => (
@@ -31,6 +31,8 @@ export default function Toolbar() {
           onClick={tool.onClick}
           width={tool.width}
           height={tool.height}
+          hoverSrc={tool.hoverSrc}
+          isHoverable={tool.isHoverable}
         />
       ))}
     </div>

@@ -1,6 +1,6 @@
-
-import "./PresentationMode.css";
+// components/new-project/PresentationMode.js
 import React, { useState } from "react";
+import "./PresentationMode.css";
 
 const PresentationMode = ({ scenes }) => {
   const [currentSceneIndex, setCurrentSceneIndex] = useState(0);
@@ -30,14 +30,14 @@ const PresentationMode = ({ scenes }) => {
 
   return (
     <div className="presentation-mode">
-      <h2>{currentScene.title}</h2>
+      <h2 className="scene-title">{currentScene.title}</h2>
       {currentShot ? (
         <div className="shot">
-          <img src={currentShot.imageDataUrl} alt={`Shot ${currentShotIndex + 1}`} />
-          <p>{currentShot.description}</p>
+          <img src={currentShot.imageDataUrl} alt={`Shot ${currentShotIndex + 1}`} className="shot-image" />
+          <p className="shot-description">{currentShot.description}</p>
         </div>
       ) : (
-        <p>No shots in this scene.</p>
+        <p className="no-shots">No shots in this scene.</p>
       )}
       <div className="controls">
         <button onClick={handlePreviousShot} disabled={currentSceneIndex === 0 && currentShotIndex === 0}>

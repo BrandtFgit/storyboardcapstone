@@ -92,6 +92,18 @@ export default function NewProject() {
         alt: "play",
         onClick: () => setMode("PRESENTATION"),
       },
+
+      // TRASHCAN TOOL
+      {
+        src: "/tool_icons/trash.png",
+        alt: "trashcan",
+        hoverSrc: "/tool_icons/trash-open.png",
+        isHoverable: true,
+        onDropItem: () => {
+          e.dataTransfer.getData("text");
+          console.log("Item dropped:", droppedData);
+        },
+      }
     ]);
 
   }else if (mode === "PRESENTATION"){
