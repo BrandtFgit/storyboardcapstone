@@ -125,11 +125,19 @@ const DrawingCanvas = ({ onSaveDrawing }) => {
       },
     },
     {
-      src: "/tool_icons/paintbucket.png", // Add icon for the paint bucket
+      src: "/tool_icons/fillbucket.png", // Add icon for the paint bucket
       alt: "paintbucket",
       onClick: () => {
         setToFill();
         console.log("Paint Bucket clicked");
+      },
+    },
+    {
+      src: "/tool_icons/spraypaint.png", // Add icon for spray paint
+      alt: "spraypaint",
+      onClick: () => {
+        setToSpray();
+        console.log("Spray Paint clicked");
       },
     },
     {
@@ -152,14 +160,6 @@ const DrawingCanvas = ({ onSaveDrawing }) => {
       onClick: () => {
         saveImageToLocal();
         console.log("Save clicked");
-      },
-    },
-    {
-      src: "/tool_icons/spraypaint.png", // Add icon for spray paint
-      alt: "spraypaint",
-      onClick: () => {
-        setToSpray();
-        console.log("Spray Paint clicked");
       },
     },
   ]);
