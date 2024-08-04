@@ -167,9 +167,8 @@ export default function NewProject() {
               value={projectName}
               onChange={(e) => setProjectName(e.target.value)}
             />
-            <button onClick={saveScenes}>{projectId ? "Save Changes" : "Save Project"}</button>
+            <div className="button" onClick={saveScenes}>{projectId ? "Save Changes" : "Save Project"}</div>
         </div>
-        <button onClick={loadScenes}>Load Project</button>
       </div>
     </main>
   );

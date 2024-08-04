@@ -441,12 +441,12 @@ return (
           <span>Selected Color: {strokeColor}</span>
         </div>
         <div>
-          <button onClick={setToDraw}>Draw</button>
-          <button onClick={setToErase}>Erase</button>
-          <a onClick={saveImageToLocal}>Save Image</a>
-          <button onClick={clearCanvas}>Clear Canvas</button>
-          <button onClick={undo}>Undo</button>
-          <button onClick={redo}>Redo</button>
+          <div className="button" onClick={setToDraw}>Draw</div>
+          <div className="button" onClick={setToErase}>Erase</div>
+          <div className="button" onClick={saveImageToLocal}>Save Image</div>
+          <div className="button" onClick={clearCanvas}>Clear Canvas</div>
+          <div className="button" onClick={undo}>Undo</div>
+          <div className="button" onClick={redo}>Redo</div>
         </div>
         <div>
           <label>Spray Size:</label>
