@@ -133,6 +133,14 @@ const DrawingCanvas = ({ onSaveDrawing }) => {
       },
     },
     {
+      src: "/tool_icons/spraypaint.png", // Add icon for spray paint
+      alt: "spraypaint",
+      onClick: () => {
+        setToSpray();
+        console.log("Spray Paint clicked");
+      },
+    },
+    {
       src: "/tool_icons/undo.png",
       alt: "undo",
       onClick: () => {
@@ -152,14 +160,6 @@ const DrawingCanvas = ({ onSaveDrawing }) => {
       onClick: () => {
         saveImageToLocal();
         console.log("Save clicked");
-      },
-    },
-    {
-      src: "/tool_icons/spraypaint.png", // Add icon for spray paint
-      alt: "spraypaint",
-      onClick: () => {
-        setToSpray();
-        console.log("Spray Paint clicked");
       },
     },
   ]);
