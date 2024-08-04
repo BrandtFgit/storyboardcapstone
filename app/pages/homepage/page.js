@@ -1,6 +1,6 @@
 "use client";
 import Navbar from "@/app/components/common/navbar";
-import {collection, getDocs, query, where } from "firebase/firestore";
+import {collection, deleteDoc, getDocs, query, where, doc } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import {db} from '@/app/_utils/firebase';
 import { useUserAuth } from "@/app/_utils/auth-context"; 
@@ -9,15 +9,22 @@ export default function Homepage() {
   const { user } = useUserAuth();
   const [savedProjects, setSavedProjects] = useState([]);
   const fetchProjects = async () => {
-    const projectQuery = query(collection(db, "projects"), where("id_user", "==", user.uid));
+  const projectQuery = query(collection(db, "projects"), where("id_user", "==", user.uid));
 
-    await getDocs(projectQuery)
-        .then((querySnapshot)=>{
-            const newData = querySnapshot.docs.map((doc) => ({...doc.data(), id:doc.id }));
-            setSavedProjects(newData);
-            console.log(newData);
-        })
-    }
+  await getDocs(projectQuery)
+      .then((querySnapshot)=>{
+          const newData = querySnapshot.docs.map((doc) => ({...doc.data(), id:doc.id }));
+          setSavedProjects(newData);
+          console.log(newData);
+      })
+  }
+  const deleteDocument = async (event) => 
+  {
+    const idDoc = event.currentTarget.getAttribute('data-key');
+    await deleteDoc(doc(db, "projects", idDoc));
+    window.location.href = '/pages/homepage'
+
+  }
   useEffect(() => {
     if(!savedProjects.length && user) 
       fetchProjects()
@@ -32,7 +39,7 @@ export default function Homepage() {
           <ul>
             <li><a className="new-button" href="./new-project">+ New Project</a></li>
             <h3>Saved Projects</h3>
-            {savedProjects.map(project => <div><a className="button" href={`./new-project?id=${project.id}`}>{project.projectName}</a></div>)}
+            {savedProjects.map(project => <div className="saved-project"><a className="button" href={`./new-project?id=${project.id}`}>{project.projectName}</a><span className="button delete" data-key={project.id} onClick={deleteDocument}>Delete</span></div>)}
             {/* <li><a className="button" href="./new-project">Load Project</a></li>
             <li><a className="button" href="./new-project">Recent Projects</a></li>
             <li><a className="button" href="./new-project">Collaborate</a></li>

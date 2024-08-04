@@ -215,3 +215,26 @@ body {
   cursor: pointer;
 
 }
+
+.saved-project
+{
+  display: flex;
+  align-items: center;
+}
+
+.saved-project .button:not(.delete)
+{
+  min-width: 100px;
+}
+.saved-project .button.delete
+{
+  background-color: maroon;
+  cursor: pointer;
+  padding-top:4px;
+  padding-bottom:4px;
+  height: 30px;  
+}
+.saved-project .button.delete:hover
+{
+  background-color: red;
+}

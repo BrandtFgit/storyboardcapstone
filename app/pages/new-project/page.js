@@ -142,6 +142,7 @@ export default function NewProject() {
         await setDoc(docRef, { projectName, scenes, id_user: user.uid });
       }
       console.log("Scenes successfully written!");
+      window.location.href = '/pages/homepage'
     } catch (e) {
       console.error("Error adding document: ", e);
     }
