@@ -24,7 +24,7 @@ export default function Login() {
       {user ? 
         redirectUserToHomepage() :
         <div>
-        <button type="submit" onClick={gitHubSignIn}   className="hover:underline">Sign in with Github</button>
+        <div onClick={gitHubSignIn}   className="button">Sign in with Github</div>
         <ul>
         <li>
           {/* <Link href="pages/canvas">Canvas</Link> */}

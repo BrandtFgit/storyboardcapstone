@@ -15,11 +15,11 @@ export default function Navbar({ title }) {
         <img src="/logov2.png" className="logo" />
       </Link>
       <h1 className="nav-title">{title}</h1>
-    <div>  
+    <div className="navbar-buttons">  
         <Link href="../../">
           <img src="/logout.ico" className="logout" />
         </Link>   
-      <button type="submit" onClick={(signOutAndRedirect)} className="hover:underline">Sign out</button>
+      <div onClick={(signOutAndRedirect)} className="button">Sign out</div>
     </div>
     </nav>
   );
