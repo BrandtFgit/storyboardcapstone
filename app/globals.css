@@ -39,40 +39,36 @@ body {
 .main {
   width: 100%;
   height: 100vh;
- /* background-color: rgb(65, 58, 67); */
- background-color: rgb(248, 228, 253); 
+  /* background-color: rgb(65, 58, 67); */
+  background-color: rgb(248, 228, 253);
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 }
 
 .main-cont {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   width: 100%;
   height: 93%;
- /* background-color: rgb(65, 58, 67); Dark Mode */
- background-color: rgb(248, 228, 253); /*Light Mode*/
+  /* background-color: rgb(65, 58, 67); Dark Mode */
+  background-color: rgb(248, 228, 253); /*Light Mode*/
 }
-.name-input-container
-{
+.name-input-container {
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  margin-right : 50px;
+  margin-right: 50px;
 }
 
-
-.name-input
-{
+.name-input {
   padding: 8px;
   border-radius: 10px;
   color: black;
 }
 .header {
-  position: relative;
   top: 0;
   left: 0;
   display: flex;
@@ -85,11 +81,10 @@ body {
 }
 
 .sidebar {
-  position: relative;
   display: flex;
   flex-direction: column;
   top: 0;
-  left: 0; 
+  left: 0;
   width: 5%;
   height: 100%;
   background-color: rgb(38, 24, 42);
@@ -98,7 +93,6 @@ body {
 
 .grid-background {
   background-repeat: repeat;
-  
 }
 
 .tool-button {
@@ -123,13 +117,11 @@ body {
   border-right-width: 0.1rem;
   border-right-color: rgb(218, 197, 224);
 }
-.home-sidebar .new-button
-{
+.home-sidebar .new-button {
   width: 100%;
 }
 
-.home-sidebar h3
-{
+.home-sidebar h3 {
   text-align: center;
   color: slategrey;
 }
@@ -198,64 +190,51 @@ body {
   border-radius: 0.5rem;
 }
 
-.navbar-buttons
-{
+.navbar-buttons {
   display: flex;
 }
 
-.navbar-buttons .button
-{
+.navbar-buttons .button {
   margin: 0 12px;
   background: rgb(92, 9, 9);
-
 }
-.navbar-buttons .button:hover
-{
+.navbar-buttons .button:hover {
   background: red;
   cursor: pointer;
-
 }
 
-.saved-project
-{
+.saved-project {
   display: flex;
 }
 
-.saved-project .button:not(.delete)
-{
+.saved-project .button:not(.delete) {
   min-width: 100px;
 }
 
-.saved-project .delete
-{
+.saved-project .delete {
   color: maroon;
   cursor: pointer;
   margin-right: 5px;
   font-weight: 500;
 }
 
-.saved-project .delete:hover
-{
+.saved-project .delete:hover {
   color: red;
 }
 
-.card
-{
+.card {
   background-color: white;
   margin: 10px;
   border-radius: 10px;
   flex-direction: column;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
-.card-header
-{
+.card-header {
   display: flex;
 }
-.card h3
-{
+.card h3 {
   width: 100%;
 }
-.card-content
-{
+.card-content {
   display: flex;
 }

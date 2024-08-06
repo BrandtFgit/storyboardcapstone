@@ -99,6 +99,7 @@
   padding: 10px; /* Add some padding */
   box-sizing: border-box; /* Include padding in the width */
   color: #000; /* Set the text color */
+  font-size: 25px; /* Set the font size */
 }
 
 .shot-container {
@@ -118,4 +119,5 @@
   margin: 15px;
   background-color: rgb(223, 227, 40);
   border-radius: 0.5rem;
+  box-shadow: 5px 5px 5px rgb(89, 89, 89);
 }
