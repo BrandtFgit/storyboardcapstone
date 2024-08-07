@@ -25,20 +25,36 @@
 .scene-container .change-name:hover {
   opacity: 1;
 }
-.scene {
+
+.scene-whole {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
   flex-wrap: wrap;
-  padding: 50px 10px 50px;
-  margin: 10px;
-  background-repeat: no-repeat;
-  background-image: url("scene-folder.svg");
-  background-size: cover;
-  background-attachment: fixed;
   width: fit-content;
   height: fit-content;
   cursor: move;
+  margin: 10px;
+}
+
+.scene-tag {
+  display: flex;
+  background-image: url(scene-folder.svg);
+  width: 200px;
+  height: 30px;
+  background-size: cover;
+  margin-left: 8px;
+}
+
+.scene {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  padding: 10px;
+  background: rgb(237, 245, 92);
+  border-radius: 10px;
+  border: 4px solid rgb(191, 182, 53);
+  width: fit-content;
+  height: fit-content;
 }
 
 .shots-container {

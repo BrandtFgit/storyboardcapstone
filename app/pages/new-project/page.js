@@ -39,7 +39,7 @@ export default function NewProject() {
   const projectId = window.location.href.split("?id=")[1];
 
   const { user } = useUserAuth();
-  const [mode, setMode] = useState("DRAWING"); // DRAWING, SCENES, PRESENTATION
+  const [mode, setMode] = useState("SCENES"); // DRAWING, SCENES, PRESENTATION
   const [scenes, setScenes] = useState([
     { id: 1, title: "Scene 1", shots: [] },
     { id: 2, title: "Scene 2", shots: [] },
@@ -148,7 +148,7 @@ export default function NewProject() {
 
       <div className="main-cont">
         <Toolbar />
-        <div style={{ width: "100%", height: "80%" }}>
+        <div style={{ width: "100%", height: "100%" }}>
           {mode === "DRAWING" && (
             <DrawingCanvas onSaveDrawing={handleSaveDrawing} />
           )}
