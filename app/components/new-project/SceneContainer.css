@@ -6,18 +6,18 @@
   align-items: center;
 }
 .scene-container input {
-  background-color: rgb(89, 68, 93);
-  border: 1px white solid;
+  background-color: rgb(232, 237, 223);
   padding: 4px;
   border-radius: 5px;
   margin-left: 5px;
   margin-top: 5px;
+  color: black;
+  border: 2px solid rgb(207, 219, 213);
 }
 .scene-container .change-name {
   padding: 4px;
   color: white;
   margin-left: 5px;
-  border: 1px white solid;
   border-radius: 10px;
   opacity: 0.8;
   background: rgb(38, 24, 42);
@@ -72,6 +72,7 @@
   padding: 5px;
   background: #fff;
   border-radius: 4px;
+  color: #000;
 }
 
 .shot img {
@@ -83,9 +84,35 @@
 
 .shot p {
   text-align: center;
-  margin-top: 5px;
+  margin: 5px;
 }
 
 .scene-rename {
   max-width: 255px;
+}
+
+.scene-title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.scene-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.scene-delete {
+  background-image: url(trash-bin.svg);
+  width: 25px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-left: 10px;
+  color: transparent;
+}
+
+.scene-delete:hover {
+  cursor: pointer;
+  background-image: url(trash-open.svg);
 }

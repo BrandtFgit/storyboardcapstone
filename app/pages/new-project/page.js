@@ -11,9 +11,17 @@ import { useUserAuth } from "../../_utils/auth-context";
 import PresentationMode from "@/app/components/presentation-mode/PresentationMode";
 
 export default function NewProject() {
+  const projectId = window.location.href.split("?id=")[1];
+
+  const { user } = useUserAuth();
+  const [mode, setMode] = useState("SCENES"); // DRAWING, SCENES, PRESENTATION
+  const [scenes, setScenes] = useState([]);
+  const [sceneCount, setSceneCount] = useState(scenes.length + 1);
+  const [selectedSceneId, setSelectedSceneId] = useState(1);
+  const [projectName, setProjectName] = useState("");
   useEffect(() => {
     if (projectId) loadScenes(projectId);
-  }, []);
+  }, [projectId]);
 
   const loadScenes = async (projectId) => {
     if (!projectId) {
@@ -26,6 +34,7 @@ export default function NewProject() {
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         setScenes(docSnap.data().scenes);
+        console.log(docSnap.data().scenes);
         setMode("SCENES");
         setProjectName(docSnap.data().projectName);
         console.log("Scenes successfully loaded!");
@@ -36,17 +45,6 @@ export default function NewProject() {
       console.error("Error loading document: ", e);
     }
   };
-  const projectId = window.location.href.split("?id=")[1];
-
-  const { user } = useUserAuth();
-  const [mode, setMode] = useState("SCENES"); // DRAWING, SCENES, PRESENTATION
-  const [scenes, setScenes] = useState([
-    { id: 1, title: "Scene 1", shots: [] },
-    { id: 2, title: "Scene 2", shots: [] },
-  ]);
-  const [sceneCount, setSceneCount] = useState(scenes.length + 1);
-  const [selectedSceneId, setSelectedSceneId] = useState(1);
-  const [projectName, setProjectName] = useState("");
 
   const toggleMode = () => {
     if (mode === "DRAWING") {
@@ -89,6 +87,13 @@ export default function NewProject() {
         src: "/tool_icons/play.ico",
         alt: "play",
         onClick: () => setMode("PRESENTATION"),
+      },
+
+      // SAVE PROJECT
+      {
+        src: "/tool_icons/save.ico",
+        alt: "save",
+        onClick: () => saveScenes(),
       },
     ]);
   } else if (mode === "PRESENTATION") {
@@ -136,7 +141,6 @@ export default function NewProject() {
         await setDoc(docRef, { projectName, scenes, id_user: user.uid });
       }
       console.log("Scenes successfully written!");
-      window.location.href = "/pages/homepage";
     } catch (e) {
       console.error("Error adding document: ", e);
     }
@@ -144,7 +148,12 @@ export default function NewProject() {
 
   return (
     <main className="main">
-      <Navbar title={projectName ? projectName : "New Project"} />
+      <Navbar
+        title={projectName}
+        editable={true}
+        setTitle={setProjectName}
+        saveScenes={saveScenes}
+      />
 
       <div className="main-cont">
         <Toolbar />
@@ -153,20 +162,13 @@ export default function NewProject() {
             <DrawingCanvas onSaveDrawing={handleSaveDrawing} />
           )}
           {mode === "SCENES" && (
-            <SceneContainer scenes={scenes} setScenes={setScenes} />
+            <SceneContainer
+              scenes={scenes}
+              setScenes={setScenes}
+              saveScenes={saveScenes}
+            />
           )}
           {mode === "PRESENTATION" && <PresentationMode scenes={scenes} />}
-        </div>
-        <div className="name-input-container">
-          <input
-            placeholder="Enter project name"
-            className="name-input"
-            value={projectName}
-            onChange={(e) => setProjectName(e.target.value)}
-          />
-          <div className="button" onClick={saveScenes}>
-            {projectId ? "Save Changes" : "Save Project"}
-          </div>
         </div>
       </div>
     </main>

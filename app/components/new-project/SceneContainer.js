@@ -4,7 +4,12 @@ import "./SceneContainer.css";
 import "../../globals.css";
 import Tools from "../common/Tools";
 
-const SceneContainer = ({ scenes, setScenes, setIsDrawingMode }) => {
+const SceneContainer = ({
+  scenes,
+  setScenes,
+  setIsDrawingMode,
+  saveScenes,
+}) => {
   // FREE SCROLL CANVAS
   const containerRef = useRef(null);
   const contentRef = useRef(null);
@@ -189,6 +194,7 @@ const SceneContainer = ({ scenes, setScenes, setIsDrawingMode }) => {
               onDropShot={onDropShot}
               onShotDropToDifferentScene={onShotDropToDifferentScene}
               isDraggingShot={!!draggedShot}
+              saveScenes={saveScenes}
             />
           ))}
         </div>

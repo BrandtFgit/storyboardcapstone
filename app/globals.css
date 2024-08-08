@@ -64,10 +64,14 @@ body {
 }
 
 .name-input {
-  padding: 8px;
+  font-family: "Blockheads";
+  background-color: rgb(51, 53, 51);
   border-radius: 10px;
-  color: black;
+  color: white;
+  font-size: 24px;
+  padding-left: 10px;
 }
+
 .header {
   top: 0;
   left: 0;
@@ -110,7 +114,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 17%;
+  width: 20%;
   height: 100%;
   /* background-color: rgb(65, 58, 67); */ /* Dark Mode */
   background-color: rgb(203, 209, 211); /* Light Mode */
@@ -174,13 +178,37 @@ body {
   font-size: 5vh; /* 24px */
   line-height: 1;
   color: rgb(255, 255, 255);
+  width: 100%;
+}
+
+.nav-title-container {
+  display: flex;
+  justify-content: center;
   position: absolute;
   top: 40;
   left: 48%;
+  width: fit-content;
+}
+
+.nav-title-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  height: 5vh;
+  margin: 1rem;
+  padding: 0.7rem;
+  background-color: rgb(51, 53, 51);
+  border-radius: 0.5rem;
+  box-shadow: 5px 5px 5px rgb(51, 51, 51);
 }
 
 .logo {
   height: 100%;
+}
+
+.logo:hover {
+  background-color: rgb(51, 53, 51);
 }
 
 .logout {
@@ -198,13 +226,14 @@ body {
 
 .navbar-buttons .button {
   box-shadow: none;
-
+  width: fit-content;
   margin: 0 12px;
   background: rgb(51, 53, 51);
 }
 .navbar-buttons .button:hover {
   background: rgb(100, 103, 100);
   cursor: pointer;
+  width: fit-content;
 }
 
 .saved-project {
@@ -232,13 +261,66 @@ body {
   border-radius: 10px;
   flex-direction: column;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  min-width: 200px;
+  width: fit-content;
 }
 .card-header {
   display: flex;
 }
 .card h3 {
   width: 100%;
+  padding: 7px;
 }
 .card-content {
   display: flex;
+}
+
+.home-main {
+  display: flex;
+  flex-direction: column;
+  font-family: "Blockheads";
+  text-align: center;
+  align-items: center;
+  width: 80%;
+  color: rgb(36, 36, 35);
+}
+
+.home-main h1 {
+  font-size: 100px;
+}
+
+.home-main h2 {
+  font-size: 50px;
+}
+
+.home-main p {
+  font-size: 25px;
+  padding: 10px 30px;
+}
+
+.sidebar-elements {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.home-main img {
+  width: 65%;
+  border: 2px solid rgb(36, 36, 35);
+  border-radius: 10px;
+}
+
+.features {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.feature {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
