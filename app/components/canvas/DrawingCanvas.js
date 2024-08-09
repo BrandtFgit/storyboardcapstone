@@ -17,6 +17,7 @@ const DrawingCanvas = ({ onSaveDrawing }) => {
   const [interactionDescription, setInteractionDescription] = useState("");
   const [spraySize, setSpraySize] = useState(10); // Adjust the default value as needed
   const [sprayDensity, setSprayDensity] = useState(5); // Number of particles per spray
+  const [rememberedColor, setRememberedColor] = useState("#000000");
 
   const colorPixel = (pos, targetColor, data) => {
     data[pos] = targetColor.r; // Red
@@ -298,7 +299,7 @@ const DrawingCanvas = ({ onSaveDrawing }) => {
 
   const setToDraw = () => {
     contextRef.current.globalCompositeOperation = "source-over";
-    setStrokeColor("#000000");
+    setStrokeColor(rememberedColor);
     stopSpray();
   };
 
@@ -313,6 +314,7 @@ const DrawingCanvas = ({ onSaveDrawing }) => {
   };
 
   const handleColorChange = (event) => {
+    setRememberedColor(event.target.value);
     setStrokeColor(event.target.value);
   };
 
