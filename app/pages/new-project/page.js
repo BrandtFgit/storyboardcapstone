@@ -11,7 +11,6 @@ import { useUserAuth } from "../../_utils/auth-context";
 import PresentationMode from "@/app/components/presentation-mode/PresentationMode";
 
 export default function NewProject() {
-  const projectId = window.location.href.split("?id=")[1];
   const [projectId, setProjectId] = useState(null);
   const { user } = useUserAuth();
   const [mode, setMode] = useState("SCENES"); // DRAWING, SCENES, PRESENTATION
