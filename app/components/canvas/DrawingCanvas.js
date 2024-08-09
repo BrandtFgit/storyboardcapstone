@@ -163,6 +163,11 @@ const DrawingCanvas = ({ onSaveDrawing, shotToEdit }) => {
         console.log("Save clicked");
       },
     },
+    // { // Add back button to return to scenes
+    //   src: "/tool_icons/back.ico",
+    //   alt: "back",
+    //   onClick: () => setMode("SCENES"),
+    // },
   ]);
 
   useEffect(() => {

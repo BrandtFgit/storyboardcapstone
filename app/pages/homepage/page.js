@@ -39,8 +39,7 @@ export default function Homepage() {
   };
   useEffect(() => {
     if (!savedProjects.length && user) fetchProjects();
-}, [user, savedProjects.length, fetchProjects]);
-
+  }, [user, savedProjects.length, fetchProjects]);
 
   return (
     <main className="main">
@@ -55,34 +54,24 @@ export default function Homepage() {
             </li>
             <h3>Saved Projects</h3>
             {savedProjects.map((project) => (
-                <div key={project.id} className="saved-project card">
-                    <div className="card-header">
-                        <h3>{project.projectName}</h3>
-                        <span
-                            className="delete"
-                            data-key={project.id}
-                            onClick={deleteDocument}
-                        >
-                            X
-                        </span>
-                    </div>
-                    <div className="card-content">
-                        <a className="button" href={`./new-project?id=${project.id}`}>
-                            Open
-                        </a>
-                    </div>
+              <div key={project.id} className="saved-project card">
+                <div className="card-header">
+                  <h3>{project.projectName}</h3>
+                  <span
+                    className="delete"
+                    data-key={project.id}
+                    onClick={deleteDocument}
+                  >
+                    X
+                  </span>
                 </div>
+                <div className="card-content">
+                  <a className="button" href={`./new-project?id=${project.id}`}>
+                    Open
+                  </a>
+                </div>
+              </div>
             ))}
-
-            {/* <li><a className="button" href="./new-project">Load Project</a></li>
-            <li><a className="button" href="./new-project">Recent Projects</a></li>
-            <li><a className="button" href="./new-project">Collaborate</a></li>
-            <li><a className="button" href="./new-project">Import</a></li>
-            <li><a className="button" href="./new-project">Export</a></li>
-            <li><a className="button" href="./new-project">Library</a></li>
-            <li><a className="button" href="./new-project">Tutorials</a></li>
-            <li><a className="button" href="./new-project">Settings</a></li>
-            <li><a className="button" href="./new-project">Help</a></li> */}
           </ul>
         </div>
         <div className="home-main">
@@ -101,6 +90,10 @@ export default function Homepage() {
             <div className="feature">
               <img src="/scene-man.png" alt="SceneSeam Scene Management" />
               <p>Arrange and Sort out your Scenes and Shots!</p>
+            </div>
+            <div className="feature">
+              <img src="/present.png" alt="SceneSeam Presentation Mode" />
+              <p>Present your Storyboard in a clean and organized way!</p>
             </div>
           </div>
         </div>

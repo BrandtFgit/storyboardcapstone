@@ -1,4 +1,3 @@
-
 import "./PresentationMode.css";
 import React, { useState } from "react";
 
@@ -30,22 +29,33 @@ const PresentationMode = ({ scenes }) => {
 
   return (
     <div className="presentation-mode">
-      <h2>{currentScene.title}</h2>
+      <h2 className="scene-name">{currentScene.title}</h2>
       {currentShot ? (
         <div className="shot">
-          <img src={currentShot.imageDataUrl} alt={`Shot ${currentShotIndex + 1}`} />
+          <img
+            src={currentShot.imageDataUrl}
+            alt={`Shot ${currentShotIndex + 1}`}
+          />
           <p>{currentShot.description}</p>
         </div>
       ) : (
         <p>No shots in this scene.</p>
       )}
-      <div className="controls">
-        <button onClick={handlePreviousShot} disabled={currentSceneIndex === 0 && currentShotIndex === 0}>
+      <div className="pres-controls">
+        <button
+          className="button"
+          onClick={handlePreviousShot}
+          disabled={currentSceneIndex === 0 && currentShotIndex === 0}
+        >
           Previous
         </button>
         <button
+          className="button"
           onClick={handleNextShot}
-          disabled={currentSceneIndex === scenes.length - 1 && currentShotIndex === currentScene.shots.length - 1}
+          disabled={
+            currentSceneIndex === scenes.length - 1 &&
+            currentShotIndex === currentScene.shots.length - 1
+          }
         >
           Next
         </button>

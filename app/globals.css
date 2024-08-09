@@ -42,6 +42,7 @@ body {
   /* background-color: rgb(65, 58, 67); */
   background-color: rgb(232, 237, 223);
   display: flex;
+  justify-content: center;
   flex-direction: column;
   align-items: center;
 }
@@ -106,7 +107,7 @@ body {
 }
 
 .tool-button:hover {
-  background-color: rgb(69, 45, 75);
+  background-color: rgb(69, 69, 69);
   border-radius: 0.5rem;
 }
 
@@ -144,11 +145,11 @@ body {
 }
 
 .button:hover {
-  background-color: rgb(93, 86, 117);
+  background-color: rgb(69, 69, 69);
 }
 
 .button:active {
-  background-color: rgb(178, 64, 64);
+  background-color: rgb(150, 150, 150);
 }
 
 .new-button {
