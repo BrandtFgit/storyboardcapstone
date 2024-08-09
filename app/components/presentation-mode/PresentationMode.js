@@ -1,5 +1,6 @@
 import "./PresentationMode.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import KeyboardShortcuts from "../common/KeyboardShortcuts";
 
 const PresentationMode = ({ scenes }) => {
   const [currentSceneIndex, setCurrentSceneIndex] = useState(0);
@@ -26,6 +27,16 @@ const PresentationMode = ({ scenes }) => {
       setCurrentShotIndex(scenes[prevSceneIndex].shots.length - 1);
     }
   };
+
+  useEffect(() => {
+    KeyboardShortcuts.addShortcut(["ArrowRight"], handleNextShot);
+    KeyboardShortcuts.addShortcut(["ArrowLeft"], handlePreviousShot);
+
+    return () => {
+      KeyboardShortcuts.removeShortcut(["ArrowRight"], handleNextShot);
+      KeyboardShortcuts.removeShortcut(["ArrowLeft"], handlePreviousShot);
+    };
+  }, [currentShotIndex, currentSceneIndex]);
 
   return (
     <div className="presentation-mode">
