@@ -15,6 +15,12 @@ class KeyboardShortcuts {
     }
 
     handleKeyDown(event) {
+        // Check if the event is occurring in a text input field or textarea
+        const target = event.target;
+        if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
+            return; // Ignore shortcuts if focus is on text input fields
+        }
+
         const keyCombination = this.getKeyCombination(event);
         if (this.shortcuts[keyCombination]) {
             event.preventDefault();

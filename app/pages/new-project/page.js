@@ -18,6 +18,7 @@ export default function NewProject() {
   const [sceneCount, setSceneCount] = useState(scenes.length);
   const [selectedSceneId, setSelectedSceneId] = useState(1);
   const [projectName, setProjectName] = useState("");
+  const [shotToEdit, setShotToEdit] = useState(null);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -119,16 +120,32 @@ export default function NewProject() {
     setScenes(
       scenes.map((scene) => {
         if (scene.id === selectedSceneId) {
-          return {
-            ...scene,
-            shots: [...scene.shots, { imageDataUrl, description }],
-          };
+          // Check if we're editing an existing shot
+          if (shotToEdit != null) {
+            return {
+              ...scene,
+              shots: scene.shots.map((shot, index) => {
+                if (index === shotToEdit.index) {
+                  // Replace the shot being edited
+                  return { ...shot, imageDataUrl, description };
+                }
+                return shot;
+              }),
+            };
+          } else {
+            // If not editing, add a new shot
+            return {
+              ...scene,
+              shots: [...scene.shots, { imageDataUrl, description }],
+            };
+          }
         }
         return scene;
       })
     );
     setMode("SCENES"); // Switch to Scene Mode after saving
-  };
+    setShotToEdit(null);
+  };  
 
   const saveScenes = async () => {
     if (!projectName) {
@@ -147,6 +164,12 @@ export default function NewProject() {
     }
   };
 
+  const onEditShot = (editShot) => {
+    console.log(editShot);
+    setShotToEdit(editShot);
+    setMode("DRAWING"); // Switch to DRAWING mode
+  };
+
   return (
     <main className="main">
       <Navbar
@@ -160,13 +183,14 @@ export default function NewProject() {
         <Toolbar />
         <div style={{ width: "100%", height: "100%" }}>
           {mode === "DRAWING" && (
-            <DrawingCanvas onSaveDrawing={handleSaveDrawing} />
+            <DrawingCanvas onSaveDrawing={handleSaveDrawing} shotToEdit = {shotToEdit}/>
           )}
           {mode === "SCENES" && (
             <SceneContainer
               scenes={scenes}
               setScenes={setScenes}
               saveScenes={saveScenes}
+              onShotEditPressed={onEditShot}
             />
           )}
           {mode === "PRESENTATION" && <PresentationMode scenes={scenes} />}

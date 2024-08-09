@@ -9,6 +9,7 @@ const SceneContainer = ({
   setScenes,
   setIsDrawingMode,
   saveScenes,
+  onShotEditPressed
 }) => {
   // FREE SCROLL CANVAS
   const containerRef = useRef(null);
@@ -195,6 +196,7 @@ const SceneContainer = ({
               onShotDropToDifferentScene={onShotDropToDifferentScene}
               isDraggingShot={!!draggedShot}
               saveScenes={saveScenes}
+              onShotEditPressed={onShotEditPressed} 
             />
           ))}
         </div>

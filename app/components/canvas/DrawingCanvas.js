@@ -4,7 +4,7 @@ import "./DrawingCanvas.css";
 import KeyboardShortcuts from "../common/KeyboardShortcuts";
 import Tools from "../common/Tools";
 
-const DrawingCanvas = ({ onSaveDrawing }) => {
+const DrawingCanvas = ({ onSaveDrawing, shotToEdit }) => {
   const canvasRef = useRef(null);
   const contextRef = useRef(null);
   const undoStack = useRef([]);
@@ -179,6 +179,13 @@ const DrawingCanvas = ({ onSaveDrawing }) => {
     context.strokeStyle = strokeColor;
     context.lineWidth = strokeSize;
     contextRef.current = context;
+
+    // Edit shot as canvas background
+    if (shotToEdit !== null) {
+      setCanvasToImage(shotToEdit.shot.imageDataUrl);
+      setInteractionDescription(shotToEdit.shot.description); // Set the default text
+    }
+
 
     // Keyboard Shortcuts
     KeyboardShortcuts.addShortcut(["Ctrl", "z"], undo);
