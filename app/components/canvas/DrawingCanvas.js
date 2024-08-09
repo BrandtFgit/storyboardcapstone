@@ -183,7 +183,10 @@ const DrawingCanvas = ({ onSaveDrawing }) => {
     // Keyboard Shortcuts
     KeyboardShortcuts.addShortcut(["Ctrl", "z"], undo);
     KeyboardShortcuts.addShortcut(["Ctrl", "y"], redo);
-
+    KeyboardShortcuts.addShortcut(["b"], setToDraw);
+    KeyboardShortcuts.addShortcut(["e"], setToErase);
+    KeyboardShortcuts.addShortcut(["s"], setToSpray);
+    KeyboardShortcuts.addShortcut(["f"], setToFill);
     // Cleanup Shortcuts
     return () => {
       KeyboardShortcuts.removeShortcut(["Ctrl", "z"], undo);

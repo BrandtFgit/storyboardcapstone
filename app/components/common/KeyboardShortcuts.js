@@ -1,4 +1,3 @@
-"use client";
 class KeyboardShortcuts {
     constructor() {
         if (KeyboardShortcuts.instance) {
@@ -7,10 +6,9 @@ class KeyboardShortcuts {
 
         this.shortcuts = {};
         this.handleKeyDown = this.handleKeyDown.bind(this);
-        this.handleKeyUp = this.handleKeyUp.bind(this);
+
         if (typeof window !== "undefined") {
-        window.addEventListener('keydown', this.handleKeyDown);
-        window.addEventListener('keyup', this.handleKeyUp);
+            window.addEventListener('keydown', this.handleKeyDown);
         }
 
         KeyboardShortcuts.instance = this;
@@ -20,15 +18,7 @@ class KeyboardShortcuts {
         const keyCombination = this.getKeyCombination(event);
         if (this.shortcuts[keyCombination]) {
             event.preventDefault();
-            this.shortcuts[keyCombination].forEach(callback => callback(true));
-        }
-    }
-
-    handleKeyUp(event) {
-        const keyCombination = this.getKeyCombination(event);
-        if (this.shortcuts[keyCombination]) {
-            event.preventDefault();
-            this.shortcuts[keyCombination].forEach(callback => callback(false));
+            this.shortcuts[keyCombination].forEach(callback => callback());
         }
     }
 
@@ -58,12 +48,11 @@ class KeyboardShortcuts {
             }
         }
     }
-    
-    // remove listeners for keybinds
+
+    // Remove listeners for keybinds
     destroy() {
         if (typeof window !== "undefined") {
-        window.removeEventListener('keydown', this.handleKeyDown);
-        window.removeEventListener('keyup', this.handleKeyUp);
+            window.removeEventListener('keydown', this.handleKeyDown);
         }
         this.shortcuts = {};
     }
