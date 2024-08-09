@@ -118,34 +118,31 @@ export default function NewProject() {
 
   const handleSaveDrawing = (imageDataUrl, description) => {
     setScenes(
-      scenes.map((scene) => {
-        if (scene.id === selectedSceneId) {
-          // Check if we're editing an existing shot
-          if (shotToEdit != null) {
-            return {
-              ...scene,
-              shots: scene.shots.map((shot, index) => {
-                if (index === shotToEdit.index) {
-                  // Replace the shot being edited
-                  return { ...shot, imageDataUrl, description };
+        scenes.map((scene, sceneIndex) => {
+            if (sceneIndex === selectedSceneId) { // Compare using sceneIndex
+                if (shotToEdit != null) {
+                    return {
+                        ...scene,
+                        shots: scene.shots.map((shot, index) => {
+                            if (index === shotToEdit.index) {
+                                return { ...shot, imageDataUrl, description };
+                            }
+                            return shot;
+                        }),
+                    };
+                } else {
+                    return {
+                        ...scene,
+                        shots: [...scene.shots, { imageDataUrl, description }],
+                    };
                 }
-                return shot;
-              }),
-            };
-          } else {
-            // If not editing, add a new shot
-            return {
-              ...scene,
-              shots: [...scene.shots, { imageDataUrl, description }],
-            };
-          }
-        }
-        return scene;
-      })
+            }
+            return scene;
+        })
     );
     setMode("SCENES"); // Switch to Scene Mode after saving
     setShotToEdit(null);
-  };  
+};
 
   const saveScenes = async () => {
     if (!projectName) {
@@ -167,6 +164,8 @@ export default function NewProject() {
   const onEditShot = (editShot) => {
     console.log(editShot);
     setShotToEdit(editShot);
+    setSelectedSceneId(editShot.sceneIndex);
+    console.log(editShot.sceneIndex);
     setMode("DRAWING"); // Switch to DRAWING mode
   };
 
