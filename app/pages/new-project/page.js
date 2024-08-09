@@ -97,7 +97,7 @@ export default function NewProject() {
 
       // SAVE PROJECT
       {
-        src: "/tool_icons/save.ico",
+        src: "/tool_icons/save.png",
         alt: "save",
         onClick: () => saveScenes(),
       },
