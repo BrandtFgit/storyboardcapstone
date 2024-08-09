@@ -78,7 +78,7 @@ export default function NewProject() {
           setSelectedSceneId(sceneCount);
           setScenes([
             ...scenes,
-            { id: sceneCount, title: `Scene ${sceneCount}`, shots: [] },
+            { id: scenes.length, title: `Scene ${sceneCount}`, shots: [] },
           ]);
         },
       },
