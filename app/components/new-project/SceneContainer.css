@@ -116,3 +116,22 @@
   cursor: pointer;
   background-image: url(trash-open.svg);
 }
+
+.shot-gizmos {
+  display: flex;
+  justify-content: space-between;
+}
+
+.edit-shot {
+  background-image: url(edit.svg);
+  width: 25px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-left: 10px;
+  color: transparent;
+}
+
+.edit-shot:hover {
+  cursor: pointer;
+  background-image: url(edit-hover.svg);
+}

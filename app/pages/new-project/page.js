@@ -11,14 +11,22 @@ import { useUserAuth } from "../../_utils/auth-context";
 import PresentationMode from "@/app/components/presentation-mode/PresentationMode";
 
 export default function NewProject() {
-  const projectId = window.location.href.split("?id=")[1];
-
+  const [projectId, setProjectId] = useState(null);
   const { user } = useUserAuth();
   const [mode, setMode] = useState("SCENES"); // DRAWING, SCENES, PRESENTATION
   const [scenes, setScenes] = useState([]);
-  const [sceneCount, setSceneCount] = useState(scenes.length + 1);
+  const [sceneCount, setSceneCount] = useState(scenes.length);
   const [selectedSceneId, setSelectedSceneId] = useState(1);
   const [projectName, setProjectName] = useState("");
+  const [shotToEdit, setShotToEdit] = useState(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const id = window.location.href.split("?id=")[1];
+      setProjectId(id);
+    }
+  }, []);
+
   useEffect(() => {
     if (projectId) loadScenes(projectId);
   }, [projectId]);
@@ -33,11 +41,13 @@ export default function NewProject() {
       const docRef = doc(db, "projects", projectId);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        setScenes(docSnap.data().scenes);
         console.log(docSnap.data().scenes);
+        setScenes(docSnap.data().scenes);
         setMode("SCENES");
         setProjectName(docSnap.data().projectName);
+        setSceneCount(docSnap.data().scenes.length+1);
         console.log("Scenes successfully loaded!");
+        console.log(sceneCount);
       } else {
         console.log("No such document!");
       }
@@ -47,12 +57,7 @@ export default function NewProject() {
   };
 
   const toggleMode = () => {
-    if (mode === "DRAWING") {
-      setMode("SCENES");
-    } else if (mode === "SCENES") {
-      setMode("DRAWING");
-    }
-    // Clear toolbar.
+    setMode((prevMode) => (prevMode === "DRAWING" ? "SCENES" : "DRAWING"));
     Tools.clearTools();
   };
 
@@ -73,12 +78,13 @@ export default function NewProject() {
         src: "/tool_icons/new-scene.ico",
         alt: "new scene",
         onClick: () => {
-          setSceneCount(sceneCount + 1);
           setSelectedSceneId(sceneCount);
+          console.log(sceneCount);
           setScenes([
             ...scenes,
             { id: sceneCount, title: `Scene ${sceneCount}`, shots: [] },
           ]);
+          setSceneCount(sceneCount+1);
         },
       },
 
@@ -115,16 +121,32 @@ export default function NewProject() {
     setScenes(
       scenes.map((scene) => {
         if (scene.id === selectedSceneId) {
-          return {
-            ...scene,
-            shots: [...scene.shots, { imageDataUrl, description }],
-          };
+          // Check if we're editing an existing shot
+          if (shotToEdit != null) {
+            return {
+              ...scene,
+              shots: scene.shots.map((shot, index) => {
+                if (index === shotToEdit.index) {
+                  // Replace the shot being edited
+                  return { ...shot, imageDataUrl, description };
+                }
+                return shot;
+              }),
+            };
+          } else {
+            // If not editing, add a new shot
+            return {
+              ...scene,
+              shots: [...scene.shots, { imageDataUrl, description }],
+            };
+          }
         }
         return scene;
       })
     );
     setMode("SCENES"); // Switch to Scene Mode after saving
-  };
+    setShotToEdit(null);
+  };  
 
   const saveScenes = async () => {
     if (!projectName) {
@@ -133,18 +155,20 @@ export default function NewProject() {
     }
 
     try {
-      // Save the scenes object to Firestore with the project name
-      if (projectId) {
-        const docRef = doc(collection(db, "projects"), projectId);
-        await setDoc(docRef, { projectName, scenes, id_user: user.uid });
-      } else {
-        const docRef = doc(collection(db, "projects"));
-        await setDoc(docRef, { projectName, scenes, id_user: user.uid });
-      }
+      const docRef = projectId
+        ? doc(collection(db, "projects"), projectId)
+        : doc(collection(db, "projects"));
+      await setDoc(docRef, { projectName, scenes, id_user: user.uid });
       console.log("Scenes successfully written!");
     } catch (e) {
       console.error("Error adding document: ", e);
     }
+  };
+
+  const onEditShot = (editShot) => {
+    console.log(editShot);
+    setShotToEdit(editShot);
+    setMode("DRAWING"); // Switch to DRAWING mode
   };
 
   return (
@@ -160,13 +184,14 @@ export default function NewProject() {
         <Toolbar />
         <div style={{ width: "100%", height: "100%" }}>
           {mode === "DRAWING" && (
-            <DrawingCanvas onSaveDrawing={handleSaveDrawing} />
+            <DrawingCanvas onSaveDrawing={handleSaveDrawing} shotToEdit = {shotToEdit}/>
           )}
           {mode === "SCENES" && (
             <SceneContainer
               scenes={scenes}
               setScenes={setScenes}
               saveScenes={saveScenes}
+              onShotEditPressed={onEditShot}
             />
           )}
           {mode === "PRESENTATION" && <PresentationMode scenes={scenes} />}

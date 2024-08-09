@@ -16,6 +16,7 @@ const Scene = ({
   onShotDropToDifferentScene,
   isDraggingShot,
   saveScenes,
+  onShotEditPressed,
 }) => {
   const [newSceneTitle, setNewSceneTitle] = useState(scene.title);
   const show_save_button = (scenes, newSceneTitle) =>
@@ -75,16 +76,17 @@ const Scene = ({
         >
           {scene.shots?.map((shot, idx) => (
             <Shot
-              key={idx}
-              shot={shot}
-              index={idx}
-              onDragStart={(e) => onDragStartShot(e, idx, index)}
-              onDragOver={(e) => e.preventDefault()}
-              onDrop={(e) => onDropShot(e, idx, index)}
-              scenes={scenes}
-              setScenes={setScenes}
-              sceneIndex={index}
-            />
+            key={idx}
+            shot={shot}
+            index={idx}
+            onDragStart={(e) => onDragStartShot(e, idx, index)}
+            onDragOver={(e) => e.preventDefault()}
+            onDrop={(e) => onDropShot(e, idx, index)}
+            scenes={scenes}
+            setScenes={setScenes}
+            sceneIndex={index}
+            onShotEditPressed={onShotEditPressed}
+          />
           ))}
         </div>
       </div>

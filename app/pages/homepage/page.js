@@ -33,11 +33,13 @@ export default function Homepage() {
   const deleteDocument = async (event) => {
     const idDoc = event.currentTarget.getAttribute("data-key");
     await deleteDoc(doc(db, "projects", idDoc));
-    window.location.href = "/pages/homepage";
+    if (typeof window !== "undefined") {
+      window.location.href = "/pages/homepage";
+    }
   };
   useEffect(() => {
     if (!savedProjects.length && user) fetchProjects();
-  }, user);
+  }, [user, savedProjects.length, fetchProjects]);
 
   return (
     <main className="main">
@@ -52,7 +54,7 @@ export default function Homepage() {
             </li>
             <h3>Saved Projects</h3>
             {savedProjects.map((project) => (
-              <div className="saved-project card">
+              <div key={project.id} className="saved-project card">
                 <div className="card-header">
                   <h3>{project.projectName}</h3>
                   <span

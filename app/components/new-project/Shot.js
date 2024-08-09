@@ -10,6 +10,7 @@ const Shot = ({
   sceneIndex,
   scenes,
   setScenes,
+  onShotEditPressed
 }) => {
   const deleteShot = (index, sceneIndex, scenes, setScenes) => {
     const newScenes = [...scenes];
@@ -27,11 +28,24 @@ const Shot = ({
     >
       <img src={shot.imageDataUrl} alt={`Shot ${index + 1}`} />
       <p>{shot.description}</p>
+
+      <div className="shot-gizmos">
       <div
         className="scene-delete"
         onClick={() => deleteShot(index, sceneIndex, scenes, setScenes)}
       >
         .
+      </div>
+
+      <div
+          className="edit-shot"
+          onClick={() => {
+            console.log({ index, sceneIndex, shot }); // Log the object before passing it
+            onShotEditPressed({ index, sceneIndex, shot });
+          }}
+        >
+          .
+        </div>
       </div>
     </div>
   );

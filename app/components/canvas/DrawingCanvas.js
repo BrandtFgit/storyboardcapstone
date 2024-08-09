@@ -4,7 +4,7 @@ import "./DrawingCanvas.css";
 import KeyboardShortcuts from "../common/KeyboardShortcuts";
 import Tools from "../common/Tools";
 
-const DrawingCanvas = ({ onSaveDrawing }) => {
+const DrawingCanvas = ({ onSaveDrawing, shotToEdit }) => {
   const canvasRef = useRef(null);
   const contextRef = useRef(null);
   const undoStack = useRef([]);
@@ -17,6 +17,7 @@ const DrawingCanvas = ({ onSaveDrawing }) => {
   const [interactionDescription, setInteractionDescription] = useState("");
   const [spraySize, setSpraySize] = useState(10); // Adjust the default value as needed
   const [sprayDensity, setSprayDensity] = useState(5); // Number of particles per spray
+  const [rememberedColor, setRememberedColor] = useState("#000000");
 
   const colorPixel = (pos, targetColor, data) => {
     data[pos] = targetColor.r; // Red
@@ -184,10 +185,20 @@ const DrawingCanvas = ({ onSaveDrawing }) => {
     context.lineWidth = strokeSize;
     contextRef.current = context;
 
+    // Edit shot as canvas background
+    if (shotToEdit !== null) {
+      setCanvasToImage(shotToEdit.shot.imageDataUrl);
+      setInteractionDescription(shotToEdit.shot.description); // Set the default text
+    }
+
+
     // Keyboard Shortcuts
     KeyboardShortcuts.addShortcut(["Ctrl", "z"], undo);
     KeyboardShortcuts.addShortcut(["Ctrl", "y"], redo);
-
+    KeyboardShortcuts.addShortcut(["b"], setToDraw);
+    KeyboardShortcuts.addShortcut(["e"], setToErase);
+    KeyboardShortcuts.addShortcut(["s"], setToSpray);
+    KeyboardShortcuts.addShortcut(["f"], setToFill);
     // Cleanup Shortcuts
     return () => {
       KeyboardShortcuts.removeShortcut(["Ctrl", "z"], undo);
@@ -257,6 +268,23 @@ const DrawingCanvas = ({ onSaveDrawing }) => {
     event.preventDefault();
   };
 
+  const setCanvasToImage = (imageSrc) => {
+    const canvas = canvasRef.current;
+    const context = contextRef.current;
+  
+    const image = new Image();
+    image.src = imageSrc;
+  
+    image.onload = () => {
+      context.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas before drawing the image
+      context.drawImage(image, 0, 0, canvas.width, canvas.height); // Draw the image on the canvas
+    };
+  
+    image.onerror = () => {
+      console.error("Failed to load the image.");
+    };
+  };
+
   const draw = (event) => {
     const offsetX =
       event.offsetX !== undefined ? event.offsetX : event.nativeEvent.offsetX;
@@ -286,7 +314,7 @@ const DrawingCanvas = ({ onSaveDrawing }) => {
 
   const setToDraw = () => {
     contextRef.current.globalCompositeOperation = "source-over";
-    setStrokeColor("#000000");
+    setStrokeColor(rememberedColor);
     stopSpray();
   };
 
@@ -301,6 +329,7 @@ const DrawingCanvas = ({ onSaveDrawing }) => {
   };
 
   const handleColorChange = (event) => {
+    setRememberedColor(event.target.value);
     setStrokeColor(event.target.value);
   };
 

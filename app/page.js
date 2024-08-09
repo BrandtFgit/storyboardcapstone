@@ -11,7 +11,9 @@ export default function Login() {
   const { user, gitHubSignIn } = useUserAuth();
 
   const redirectUserToHomepage = () => {
-    window.location.href = "/pages/homepage";
+    if (typeof window !== "undefined") {
+      window.location.href = "/pages/homepage";
+    }
   };
 
   return (

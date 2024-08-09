@@ -1,4 +1,3 @@
-"use client";
 class KeyboardShortcuts {
     constructor() {
         if (KeyboardShortcuts.instance) {
@@ -7,26 +6,25 @@ class KeyboardShortcuts {
 
         this.shortcuts = {};
         this.handleKeyDown = this.handleKeyDown.bind(this);
-        this.handleKeyUp = this.handleKeyUp.bind(this);
-        window.addEventListener('keydown', this.handleKeyDown);
-        window.addEventListener('keyup', this.handleKeyUp);
+
+        if (typeof window !== "undefined") {
+            window.addEventListener('keydown', this.handleKeyDown);
+        }
 
         KeyboardShortcuts.instance = this;
     }
 
     handleKeyDown(event) {
-        const keyCombination = this.getKeyCombination(event);
-        if (this.shortcuts[keyCombination]) {
-            event.preventDefault();
-            this.shortcuts[keyCombination].forEach(callback => callback(true));
+        // Check if the event is occurring in a text input field or textarea
+        const target = event.target;
+        if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
+            return; // Ignore shortcuts if focus is on text input fields
         }
-    }
 
-    handleKeyUp(event) {
         const keyCombination = this.getKeyCombination(event);
         if (this.shortcuts[keyCombination]) {
             event.preventDefault();
-            this.shortcuts[keyCombination].forEach(callback => callback(false));
+            this.shortcuts[keyCombination].forEach(callback => callback());
         }
     }
 
@@ -56,11 +54,12 @@ class KeyboardShortcuts {
             }
         }
     }
-    
-    // remove listeners for keybinds
+
+    // Remove listeners for keybinds
     destroy() {
-        window.removeEventListener('keydown', this.handleKeyDown);
-        window.removeEventListener('keyup', this.handleKeyUp);
+        if (typeof window !== "undefined") {
+            window.removeEventListener('keydown', this.handleKeyDown);
+        }
         this.shortcuts = {};
     }
 }
