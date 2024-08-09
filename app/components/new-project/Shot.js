@@ -36,12 +36,12 @@ const Shot = ({
         .
       </div>
 
-      <div
+      {/* <div
         className="edit-shot"
         onClick={() => deleteShot(index, sceneIndex, scenes, setScenes)}
       >
         .
-      </div>
+      </div> */}
       </div>
     </div>
   );
