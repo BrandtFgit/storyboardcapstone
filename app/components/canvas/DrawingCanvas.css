@@ -9,8 +9,8 @@
 .controls {
   display: flex;
   flex-direction: column;
-  align-items: center;
   margin-top: 10px;
+  color: rgb(36, 36, 35);
 }
 
 .controls > div {
@@ -61,7 +61,7 @@
 
 .controls button.clear-button {
   background-color: #ff0000; /* Red background color */
-  color: #ffffff; /* White text color */
+  color: rgb(36, 36, 35);
   border: none;
   border-radius: 5px;
   padding: 10px 20px;
@@ -75,7 +75,7 @@
 
 .controls a.save-link {
   background-color: #00ff00; /* Green background color */
-  color: #ffffff; /* White text color */
+  color: rgb(36, 36, 35);
   border: none;
   border-radius: 5px;
   padding: 10px 20px;

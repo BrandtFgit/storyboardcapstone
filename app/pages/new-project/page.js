@@ -100,9 +100,10 @@ export default function NewProject() {
     // Set tool to escape presentation.
 
     Tools.setTools([
+      // EXIT PRESENTATION
       {
-        src: "/tool_icons/exit.ico",
-        alt: "exit presentation",
+        src: "/tool_icons/back.ico",
+        alt: "back",
         onClick: () => setMode("SCENES"),
       },
     ]);

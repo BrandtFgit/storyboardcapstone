@@ -70,15 +70,6 @@ export default function Homepage() {
                 </div>
               </div>
             ))}
-            {/* <li><a className="button" href="./new-project">Load Project</a></li>
-            <li><a className="button" href="./new-project">Recent Projects</a></li>
-            <li><a className="button" href="./new-project">Collaborate</a></li>
-            <li><a className="button" href="./new-project">Import</a></li>
-            <li><a className="button" href="./new-project">Export</a></li>
-            <li><a className="button" href="./new-project">Library</a></li>
-            <li><a className="button" href="./new-project">Tutorials</a></li>
-            <li><a className="button" href="./new-project">Settings</a></li>
-            <li><a className="button" href="./new-project">Help</a></li> */}
           </ul>
         </div>
         <div className="home-main">
@@ -97,6 +88,10 @@ export default function Homepage() {
             <div className="feature">
               <img src="/scene-man.png" alt="SceneSeam Scene Management" />
               <p>Arrange and Sort out your Scenes and Shots!</p>
+            </div>
+            <div className="feature">
+              <img src="/present.png" alt="SceneSeam Presentation Mode" />
+              <p>Present your Storyboard in a clean and organized way!</p>
             </div>
           </div>
         </div>
