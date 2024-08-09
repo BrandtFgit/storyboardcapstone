@@ -33,7 +33,9 @@ export default function Homepage() {
   const deleteDocument = async (event) => {
     const idDoc = event.currentTarget.getAttribute("data-key");
     await deleteDoc(doc(db, "projects", idDoc));
-    window.location.href = "/pages/homepage";
+    if (typeof window !== "undefined") {
+      window.location.href = "/pages/homepage";
+    }
   };
   useEffect(() => {
     if (!savedProjects.length && user) fetchProjects();
