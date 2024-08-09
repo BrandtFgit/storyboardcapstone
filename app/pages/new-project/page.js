@@ -15,7 +15,7 @@ export default function NewProject() {
   const { user } = useUserAuth();
   const [mode, setMode] = useState("SCENES"); // DRAWING, SCENES, PRESENTATION
   const [scenes, setScenes] = useState([]);
-  const [sceneCount, setSceneCount] = useState(scenes.length + 1);
+  const [sceneCount, setSceneCount] = useState(scenes.length);
   const [selectedSceneId, setSelectedSceneId] = useState(1);
   const [projectName, setProjectName] = useState("");
 
@@ -40,10 +40,13 @@ export default function NewProject() {
       const docRef = doc(db, "projects", projectId);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
+        console.log(docSnap.data().scenes);
         setScenes(docSnap.data().scenes);
         setMode("SCENES");
         setProjectName(docSnap.data().projectName);
+        setSceneCount(docSnap.data().scenes.length+1);
         console.log("Scenes successfully loaded!");
+        console.log(sceneCount);
       } else {
         console.log("No such document!");
       }
@@ -74,12 +77,13 @@ export default function NewProject() {
         src: "/tool_icons/new-scene.ico",
         alt: "new scene",
         onClick: () => {
-          setSceneCount(sceneCount + 1);
           setSelectedSceneId(sceneCount);
+          console.log(sceneCount);
           setScenes([
             ...scenes,
-            { id: scenes.length, title: `Scene ${sceneCount}`, shots: [] },
+            { id: sceneCount, title: `Scene ${sceneCount}`, shots: [] },
           ]);
+          setSceneCount(sceneCount+1);
         },
       },
 
