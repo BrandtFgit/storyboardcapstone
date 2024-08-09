@@ -37,7 +37,8 @@ export default function Homepage() {
   };
   useEffect(() => {
     if (!savedProjects.length && user) fetchProjects();
-  }, user);
+}, [user, savedProjects.length, fetchProjects]);
+
 
   return (
     <main className="main">
@@ -52,24 +53,25 @@ export default function Homepage() {
             </li>
             <h3>Saved Projects</h3>
             {savedProjects.map((project) => (
-              <div className="saved-project card">
-                <div className="card-header">
-                  <h3>{project.projectName}</h3>
-                  <span
-                    className="delete"
-                    data-key={project.id}
-                    onClick={deleteDocument}
-                  >
-                    X
-                  </span>
+                <div key={project.id} className="saved-project card">
+                    <div className="card-header">
+                        <h3>{project.projectName}</h3>
+                        <span
+                            className="delete"
+                            data-key={project.id}
+                            onClick={deleteDocument}
+                        >
+                            X
+                        </span>
+                    </div>
+                    <div className="card-content">
+                        <a className="button" href={`./new-project?id=${project.id}`}>
+                            Open
+                        </a>
+                    </div>
                 </div>
-                <div className="card-content">
-                  <a className="button" href={`./new-project?id=${project.id}`}>
-                    Open
-                  </a>
-                </div>
-              </div>
             ))}
+
             {/* <li><a className="button" href="./new-project">Load Project</a></li>
             <li><a className="button" href="./new-project">Recent Projects</a></li>
             <li><a className="button" href="./new-project">Collaborate</a></li>

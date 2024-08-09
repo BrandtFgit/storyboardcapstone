@@ -252,6 +252,23 @@ const DrawingCanvas = ({ onSaveDrawing }) => {
     event.preventDefault();
   };
 
+  const setCanvasToImage = (imageSrc) => {
+    const canvas = canvasRef.current;
+    const context = contextRef.current;
+  
+    const image = new Image();
+    image.src = imageSrc;
+  
+    image.onload = () => {
+      context.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas before drawing the image
+      context.drawImage(image, 0, 0, canvas.width, canvas.height); // Draw the image on the canvas
+    };
+  
+    image.onerror = () => {
+      console.error("Failed to load the image.");
+    };
+  };
+
   const draw = (event) => {
     const offsetX =
       event.offsetX !== undefined ? event.offsetX : event.nativeEvent.offsetX;
