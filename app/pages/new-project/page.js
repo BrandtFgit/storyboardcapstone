@@ -12,13 +12,21 @@ import PresentationMode from "@/app/components/presentation-mode/PresentationMod
 
 export default function NewProject() {
   const projectId = window.location.href.split("?id=")[1];
-
+  const [projectId, setProjectId] = useState(null);
   const { user } = useUserAuth();
   const [mode, setMode] = useState("SCENES"); // DRAWING, SCENES, PRESENTATION
   const [scenes, setScenes] = useState([]);
   const [sceneCount, setSceneCount] = useState(scenes.length + 1);
   const [selectedSceneId, setSelectedSceneId] = useState(1);
   const [projectName, setProjectName] = useState("");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const id = window.location.href.split("?id=")[1];
+      setProjectId(id);
+    }
+  }, []);
+
   useEffect(() => {
     if (projectId) loadScenes(projectId);
   }, [projectId]);
@@ -34,7 +42,6 @@ export default function NewProject() {
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         setScenes(docSnap.data().scenes);
-        console.log(docSnap.data().scenes);
         setMode("SCENES");
         setProjectName(docSnap.data().projectName);
         console.log("Scenes successfully loaded!");
@@ -47,12 +54,7 @@ export default function NewProject() {
   };
 
   const toggleMode = () => {
-    if (mode === "DRAWING") {
-      setMode("SCENES");
-    } else if (mode === "SCENES") {
-      setMode("DRAWING");
-    }
-    // Clear toolbar.
+    setMode((prevMode) => (prevMode === "DRAWING" ? "SCENES" : "DRAWING"));
     Tools.clearTools();
   };
 
@@ -132,14 +134,10 @@ export default function NewProject() {
     }
 
     try {
-      // Save the scenes object to Firestore with the project name
-      if (projectId) {
-        const docRef = doc(collection(db, "projects"), projectId);
-        await setDoc(docRef, { projectName, scenes, id_user: user.uid });
-      } else {
-        const docRef = doc(collection(db, "projects"));
-        await setDoc(docRef, { projectName, scenes, id_user: user.uid });
-      }
+      const docRef = projectId
+        ? doc(collection(db, "projects"), projectId)
+        : doc(collection(db, "projects"));
+      await setDoc(docRef, { projectName, scenes, id_user: user.uid });
       console.log("Scenes successfully written!");
     } catch (e) {
       console.error("Error adding document: ", e);
