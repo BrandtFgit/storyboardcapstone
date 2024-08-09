@@ -8,8 +8,10 @@ class KeyboardShortcuts {
         this.shortcuts = {};
         this.handleKeyDown = this.handleKeyDown.bind(this);
         this.handleKeyUp = this.handleKeyUp.bind(this);
+        if (typeof window !== "undefined") {
         window.addEventListener('keydown', this.handleKeyDown);
         window.addEventListener('keyup', this.handleKeyUp);
+        }
 
         KeyboardShortcuts.instance = this;
     }
@@ -59,8 +61,10 @@ class KeyboardShortcuts {
     
     // remove listeners for keybinds
     destroy() {
+        if (typeof window !== "undefined") {
         window.removeEventListener('keydown', this.handleKeyDown);
         window.removeEventListener('keyup', this.handleKeyUp);
+        }
         this.shortcuts = {};
     }
 }

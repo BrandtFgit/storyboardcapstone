@@ -14,7 +14,9 @@ export default function Login() {
    
     const redirectUserToHomepage = () =>
     {
+      if (typeof window !== "undefined") {
       window.location.href = '/pages/homepage'
+      }
     }
  
 

@@ -13,7 +13,9 @@ export default function Navbar({
   const [edit, setEdit] = useState(false);
   const signOutAndRedirect = () => {
     firebaseSignOut();
+    if (typeof window !== "undefined") {
     window.location.href = "/";
+    }
   };
   const renderTitle = () => {
     if (edit && editable) {
